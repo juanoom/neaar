@@ -1,11 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Acceso Exclusivo</title>
+    <!--CSS-->
+    <link rel="stylesheet" href="/styles/index.css">
 </head>
 <body>
-    <h1>Hello world</h1>
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="glass-container">
+        <div class="exclusive-badge">Beta</div>
+        
+        <div class="logo-container">
+            <div class="logo">🔐</div>
+        </div>
+
+        <h1 class="title">Acceso Exclusivo</h1>
+        <p class="subtitle">Ingresa tu código de acceso para continuar</p>
+
+        <form class="form-container" id="accessForm">
+            <div class="input-wrapper">
+                <input 
+                    type="password" 
+                    class="password-input" 
+                    id="passwordInput" 
+                    placeholder="Código de acceso"
+                    required
+                    autocomplete="off"
+                >
+            </div>
+            
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Verificar Acceso
+            </button>
+            
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <span style="color: rgba(242, 240, 229, 0.8);">Verificando...</span>
+            </div>
+        </form>
+
+        <div class="message error-message" id="errorMessage">
+            Código incorrecto. Verifica e intenta nuevamente.
+        </div>
+        
+        <div class="message success-message" id="successMessage">
+            ¡Acceso verificado! Redirigiendo...
+        </div>
+
+        <p class="hint">Solo para usuarios autorizados</p>
+    </div>
+
+    <script>
+        // Configuration
+        const validPasswords = [
+            'early-access-2025',
+            'vip-beta-user',
+            'exclusive-preview',
+            'founders-club',
+            'tech-insider'
+        ];
+
+        const masterPassword = 'admin-override';
+
+        // DOM elements
+        const form = document.getElementById('accessForm');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitBtn = document.getElementById('submitBtn');
+        const loading = document.getElementById('loading');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const password = passwordInput.value.trim();
+            
+            if (!password) return;
+            
+            // Show loading state
+            showLoading(true);
+            hideMessages();
+            
+            // Simulate verification delay for better UX
+            setTimeout(() => {
+                if (isValidPassword(password)) {
+                    handleSuccessfulLogin(password);
+                } else {
+                    handleFailedLogin(password);
+                }
+            }, 1200);
+        });
+
+        // Password validation
+        function isValidPassword(password) {
+            return validPasswords.includes(password) || password === masterPassword;
+        }
+
+        // Successful login
+        function handleSuccessfulLogin(password) {
+            showLoading(false);
+            successMessage.style.display = 'block';
+            
+            // Track successful access
+            console.log('Access granted with password:', password);
+            
+            // Redirect to main page after delay
+            setTimeout(() => {
+                window.location.href = 'main.html';
+            }, 1500);
+        }
+
+        // Failed login
+        function handleFailedLogin(password) {
+            showLoading(false);
+            errorMessage.style.display = 'block';
+            
+            // Add shake animation to input
+            passwordInput.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+                passwordInput.style.animation = '';
+            }, 500);
+            
+            // Track failed attempt
+            console.log('Access denied for password:', password);
+            
+            // Clear input
+            passwordInput.value = '';
+        }
+
+        // Utility functions
+        function showLoading(show) {
+            loading.style.display = show ? 'block' : 'none';
+            submitBtn.disabled = show;
+            submitBtn.style.opacity = show ? '0.7' : '1';
+        }
+
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // Input event listeners
+        passwordInput.addEventListener('input', hideMessages);
+        
+        passwordInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                form.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Add shake animation to CSS
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Focus input on page load
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+    </script>
 </body>
 </html>
