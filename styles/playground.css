@@ -1,0 +1,92 @@
+/* --- Reset y Configuración Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden; /* Evita scrollbars durante la animación */
+}
+
+body {
+    background-color: #000000;
+    font-family: 'Helvetica Neue', 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- El Escenario 3D --- */
+.scene {
+    perspective: 1200px; /* Profundidad de la escena 3D */
+    transform-style: preserve-3d;
+}
+
+.headline {
+    color: #ffffff;
+    font-size: clamp(3rem, 15vw, 10rem); /* Tipografía fluida */
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    position: relative;
+    transform-style: preserve-3d; /* Permite que los hijos (.char) vivan en 3D */
+    outline: none; /* Splitting.js puede añadir outlines */
+}
+
+/* --- El Fragmento de Cristal (.char) --- */
+.char {
+    display: inline-block; /* Necesario para que transform funcione */
+    position: relative;
+    color: transparent; /* El texto real es transparente, vemos el "cristal" */
+    
+    /* El efecto Glassmorphism */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px); /* Para Safari */
+    
+    transform-style: preserve-3d;
+    opacity: 0; /* Inicialmente invisibles */
+}
+
+/* --- La Aberración Cromática --- */
+.char::before,
+.char::after {
+    content: attr(data-char); /* Muestra la letra dentro del pseudo-elemento */
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    pointer-events: none; /* No interfieren con el mouse */
+    mix-blend-mode: screen; /* Mezcla de colores para el efecto de refracción */
+}
+
+.char::before {
+    transform: translate(-1px, -1px);
+    color: #ff4d4d; /* Tono rojo */
+}
+
+.char::after {
+    transform: translate(1px, 1px);
+    color: #4dffff; /* Tono cian/azul */
+}
+
+
+/* --- La Luz Final --- */
+.headline::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    padding-bottom: 200%;
+    border-radius: 50%;
+    
+    /* Un gradiente radial suave */
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 60%);
+    
+    /* Estado inicial antes de la animación */
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+}
