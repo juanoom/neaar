@@ -1,1 +1,1013 @@
-gogo
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neaar Card — Tu tarjeta de presentación inteligente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #2563FF;
+    --blue-light: #4F7FFF;
+    --green: #22C55E;
+    --cream: #F0EDE6;
+    --dark: #0A0A0A;
+    --dark2: #111111;
+    --dark3: #1A1A1A;
+    --card-bg: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.08);
+    --text-muted: rgba(255,255,255,0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--dark);
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, .logo { font-family: 'Syne', sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 5%;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: padding .3s;
+  }
+  .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
+  .logo span { color: var(--blue); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta {
+    background: var(--blue); color: #fff; border: none; padding: 10px 22px;
+    border-radius: 100px; font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: .9rem; cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,255,.4); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    background: var(--cream);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 120px 5% 80px;
+    gap: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(37,99,255,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text { color: #0A0A0A; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(37,99,255,.12); color: var(--blue);
+    border: 1px solid rgba(37,99,255,.25);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: .82rem; font-weight: 600; margin-bottom: 24px;
+    font-family: 'Syne', sans-serif;
+  }
+  .hero-badge::before { content: '●'; font-size: .6rem; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  .hero-text h1 {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+    margin-bottom: 20px;
+  }
+  .hero-text h1 em { font-style: normal; color: var(--blue); }
+  .hero-sub {
+    font-size: 1.1rem; color: #444; line-height: 1.6;
+    max-width: 480px; margin-bottom: 36px;
+  }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--blue); color: #fff; border: none;
+    padding: 14px 28px; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,99,255,.4); }
+  .btn-outline {
+    background: transparent; color: #0A0A0A;
+    border: 2px solid #0A0A0A;
+    padding: 13px 28px; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; text-decoration: none;
+    transition: all .2s; display: inline-block;
+  }
+  .btn-outline:hover { background: #0A0A0A; color: #fff; }
+
+  .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
+  .hero-phone {
+    width: 260px;
+    background: #fff;
+    border-radius: 36px;
+    box-shadow: 0 40px 80px rgba(0,0,0,.25), 0 0 0 8px #e8e4dc;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+  }
+  .phone-header {
+    height: 140px;
+    background: linear-gradient(135deg, #ff6b35, #ff2d55, #7c3aed);
+  }
+  .phone-profile { padding: 0 20px 20px; text-align: center; margin-top: -32px; }
+  .phone-avatar {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: 3px solid #fff;
+    margin: 0 auto 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .phone-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #111; }
+  .phone-title { font-size: .78rem; color: #666; margin-bottom: 12px; }
+  .phone-icons { display: flex; justify-content: center; gap: 14px; margin-bottom: 14px; }
+  .phone-icon {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: #f4f4f4; display: flex; align-items: center; justify-content: center;
+    font-size: .9rem;
+  }
+  .phone-btn {
+    display: block; width: 100%;
+    background: var(--blue); color: #fff;
+    border: none; border-radius: 8px;
+    padding: 10px; text-align: center;
+    font-size: .82rem; font-weight: 600;
+    margin-bottom: 6px; cursor: pointer;
+    font-family: 'Syne', sans-serif;
+  }
+  .nfc-card-float {
+    position: absolute;
+    top: -20px; right: -30px;
+    width: 140px; height: 88px;
+    background: var(--blue);
+    border-radius: 14px;
+    display: flex; flex-direction: column;
+    justify-content: space-between;
+    padding: 12px;
+    box-shadow: 0 20px 40px rgba(37,99,255,.5);
+    z-index: 3;
+    transform: rotate(8deg);
+  }
+  .nfc-card-float .brand {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    color: #fff; font-size: .75rem; line-height: 1.2;
+    letter-spacing: 1px;
+  }
+  .nfc-symbol { color: rgba(255,255,255,.7); font-size: 1.2rem; align-self: flex-end; }
+  .dots-pattern {
+    position: absolute; bottom: 10px; right: 10px;
+    display: grid; grid-template-columns: repeat(4,6px); gap: 3px;
+  }
+  .dots-pattern span {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(255,255,255,.5);
+  }
+
+  /* ── PAIN SECTION ── */
+  #pain {
+    background: var(--dark2);
+    padding: 100px 5%;
+    text-align: center;
+  }
+  .section-label {
+    font-family: 'Syne', sans-serif; font-size: .8rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 16px;
+  }
+  #pain h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 800; letter-spacing: -1px;
+    max-width: 700px; margin: 0 auto 20px;
+    line-height: 1.1;
+  }
+  #pain h2 .highlight {
+    background: var(--blue);
+    padding: 2px 12px; border-radius: 6px;
+  }
+  .pain-sub {
+    color: var(--text-muted); max-width: 560px; margin: 0 auto 60px;
+    font-size: 1.05rem; line-height: 1.7;
+  }
+  .pain-cards {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 20px; max-width: 960px; margin: 0 auto;
+  }
+  .pain-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 28px;
+    text-align: left; position: relative; overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .pain-card:hover { transform: translateY(-6px); border-color: rgba(37,99,255,.4); }
+  .pain-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), transparent);
+  }
+  .pain-emoji { font-size: 2.2rem; margin-bottom: 16px; display: block; }
+  .pain-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+  .pain-card p { color: var(--text-muted); font-size: .92rem; line-height: 1.6; }
+
+  /* ── WHY SECTION ── */
+  #why {
+    background: var(--cream);
+    padding: 100px 5%;
+    color: #0A0A0A;
+  }
+  #why .inner { max-width: 1100px; margin: 0 auto; }
+  #why .section-label { color: var(--blue); }
+  #why h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 16px; line-height: 1.1;
+  }
+  #why h2 .highlight { color: var(--blue); }
+  .why-sub { color: #555; max-width: 560px; font-size: 1.05rem; line-height: 1.7; margin-bottom: 60px; }
+  .timeline {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 0; position: relative;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    top: 120px; left: 16.5%; right: 16.5%; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+    z-index: 0;
+  }
+  .timeline-item { text-align: center; position: relative; z-index: 1; }
+  .tl-img {
+    width: 200px; height: 140px; border-radius: 16px;
+    object-fit: cover; margin: 0 auto 0;
+    display: block;
+    box-shadow: 0 12px 32px rgba(0,0,0,.15);
+    background: #ddd;
+    overflow: hidden;
+  }
+  .tl-img-placeholder {
+    width: 200px; height: 140px; border-radius: 16px;
+    margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,.15);
+  }
+  .tl-year {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: 1rem; color: #0A0A0A; margin: 16px 0 6px;
+  }
+  .tl-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--blue); margin: 0 auto 16px;
+    border: 3px solid var(--cream);
+    box-shadow: 0 0 0 3px var(--blue);
+  }
+  .timeline-item p { font-size: .88rem; color: #444; line-height: 1.6; max-width: 200px; margin: 0 auto; }
+  .timeline-item strong { color: #0A0A0A; }
+  .timeline-item .accent { color: var(--blue); font-weight: 700; }
+
+  /* ── FEATURES ── */
+  #features {
+    background: var(--dark);
+    padding: 100px 5%;
+  }
+  #features .inner { max-width: 1100px; margin: 0 auto; }
+  #features h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    text-align: center; margin-bottom: 12px;
+  }
+  #features h2 em { font-style: normal; color: var(--blue); }
+  .features-sub {
+    text-align: center; color: var(--text-muted);
+    max-width: 500px; margin: 0 auto 60px; line-height: 1.7;
+  }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+  }
+  .feat-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 32px 24px;
+    transition: all .3s;
+  }
+  .feat-card:hover { border-color: rgba(37,99,255,.5); background: rgba(37,99,255,.06); }
+  .feat-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(37,99,255,.15);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 18px;
+  }
+  .feat-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .feat-card p { color: var(--text-muted); font-size: .88rem; line-height: 1.6; }
+
+  /* ── HOW IT WORKS ── */
+  #how {
+    background: var(--dark2);
+    padding: 100px 5%;
+  }
+  #how .inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  #how h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  #how h2 em { font-style: italic; color: var(--blue); }
+  .how-sub { color: var(--text-muted); max-width: 500px; margin: 0 auto 60px; line-height: 1.7; }
+  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+  .step { position: relative; }
+  .step-num {
+    font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800;
+    color: rgba(37,99,255,.2); line-height: 1; margin-bottom: 16px;
+  }
+  .step-icon-wrap {
+    width: 80px; height: 80px; border-radius: 20px;
+    background: var(--dark3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; margin: 0 auto 20px;
+  }
+  .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .step p { color: var(--text-muted); font-size: .88rem; line-height: 1.6; }
+
+  /* ── COMPARISON ── */
+  #comparison {
+    background: var(--dark);
+    padding: 100px 5%;
+  }
+  #comparison .inner { max-width: 860px; margin: 0 auto; }
+  #comparison h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    text-align: center; margin-bottom: 12px;
+  }
+  #comparison h2 em { font-style: normal; color: var(--blue); }
+  .comp-sub { text-align: center; color: var(--text-muted); margin-bottom: 50px; line-height: 1.7; }
+  .comp-table {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 24px; overflow: hidden;
+  }
+  .comp-header {
+    display: grid; grid-template-columns: 1fr 120px 160px;
+    padding: 20px 32px;
+    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-header span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; text-align: center; }
+  .comp-header span:first-child { text-align: left; color: var(--text-muted); }
+  .comp-header .neaar-col { color: var(--blue); }
+  .comp-row {
+    display: grid; grid-template-columns: 1fr 120px 160px;
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+    transition: background .2s;
+  }
+  .comp-row:last-child { border-bottom: none; }
+  .comp-row:hover { background: rgba(255,255,255,.02); }
+  .comp-row span { text-align: center; font-size: .95rem; }
+  .comp-row span:first-child { text-align: left; color: rgba(255,255,255,.85); font-size: .9rem; }
+  .check { color: var(--blue); font-size: 1.1rem; }
+  .cross { color: rgba(255,255,255,.2); font-size: 1.1rem; }
+
+  /* ── PRICING ── */
+  #pricing {
+    background: var(--dark2);
+    padding: 100px 5%;
+  }
+  #pricing .inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  #pricing h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+  .pricing-sub { color: var(--text-muted); max-width: 500px; margin: 0 auto 50px; line-height: 1.7; }
+  .pricing-card {
+    background: var(--dark3);
+    border: 1px solid rgba(37,99,255,.4);
+    border-radius: 28px; padding: 48px 40px;
+    max-width: 500px; margin: 0 auto;
+    position: relative; overflow: hidden;
+  }
+  .pricing-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  }
+  .pricing-badge {
+    display: inline-block;
+    background: rgba(37,99,255,.15); color: var(--blue);
+    border: 1px solid rgba(37,99,255,.3);
+    padding: 5px 14px; border-radius: 100px;
+    font-size: .8rem; font-weight: 700; font-family: 'Syne', sans-serif;
+    margin-bottom: 24px;
+  }
+  .pricing-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; }
+  .price-old {
+    font-size: 1.2rem; color: var(--text-muted);
+    text-decoration: line-through; margin-bottom: 4px;
+  }
+  .price-new {
+    font-size: 3.5rem; font-weight: 800; font-family: 'Syne', sans-serif;
+    line-height: 1; margin-bottom: 6px;
+  }
+  .price-period { color: var(--text-muted); font-size: .9rem; margin-bottom: 32px; }
+  .pricing-features { list-style: none; text-align: left; margin-bottom: 36px; }
+  .pricing-features li {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: .92rem;
+  }
+  .pricing-features li:last-child { border-bottom: none; }
+  .pricing-features li::before { content: '✓'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
+  .btn-order {
+    display: block; width: 100%;
+    background: var(--green); color: #fff;
+    border: none; border-radius: 14px;
+    padding: 16px; text-align: center;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn-order:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(34,197,94,.35); }
+
+  /* ── REVIEWS ── */
+  #reviews {
+    background: var(--dark);
+    padding: 100px 5%;
+  }
+  #reviews .inner { max-width: 1100px; margin: 0 auto; }
+  #reviews h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    text-align: center; margin-bottom: 12px;
+  }
+  .reviews-rating {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    margin-bottom: 50px;
+  }
+  .stars { color: #FFB800; font-size: 1.5rem; letter-spacing: 2px; }
+  .rating-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
+  .rating-count { color: var(--text-muted); font-size: .9rem; }
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+  }
+  .review-card {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: 20px; padding: 28px;
+    transition: transform .3s, border-color .3s;
+  }
+  .review-card:hover { transform: translateY(-4px); border-color: rgba(37,99,255,.3); }
+  .review-stars { color: #FFB800; font-size: .95rem; margin-bottom: 14px; }
+  .review-text { font-size: .93rem; line-height: 1.7; color: rgba(255,255,255,.8); margin-bottom: 20px; font-style: italic; }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+    font-weight: 700; font-family: 'Syne', sans-serif;
+  }
+  .review-info .name { font-weight: 600; font-size: .9rem; }
+  .review-info .role { color: var(--text-muted); font-size: .8rem; }
+  .verified { display: flex; align-items: center; gap: 4px; color: var(--blue); font-size: .75rem; margin-top: 2px; }
+
+  /* ── FAQ ── */
+  #faq {
+    background: var(--dark2);
+    padding: 100px 5%;
+  }
+  #faq .inner { max-width: 720px; margin: 0 auto; }
+  #faq h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800; letter-spacing: -1px;
+    text-align: center; margin-bottom: 12px;
+  }
+  .faq-sub { text-align: center; color: var(--text-muted); margin-bottom: 50px; line-height: 1.7; }
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 14px; margin-bottom: 12px;
+    overflow: hidden; transition: border-color .3s;
+  }
+  .faq-item.open { border-color: rgba(37,99,255,.4); }
+  .faq-q {
+    width: 100%; background: var(--dark3);
+    border: none; color: #fff; text-align: left;
+    padding: 20px 24px; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem;
+    transition: background .2s;
+  }
+  .faq-q:hover { background: rgba(255,255,255,.04); }
+  .faq-icon {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(37,99,255,.2); color: var(--blue);
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; flex-shrink: 0; transition: transform .3s;
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height .4s ease, padding .3s;
+    background: var(--dark3);
+    padding: 0 24px;
+    color: var(--text-muted); font-size: .92rem; line-height: 1.7;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+
+  /* ── CTA FINAL ── */
+  #cta-final {
+    background: var(--blue);
+    padding: 100px 5%;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  #cta-final::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.15) 0%, transparent 60%);
+  }
+  #cta-final h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800; letter-spacing: -1.5px;
+    margin-bottom: 20px; position: relative; line-height: 1.1;
+  }
+  #cta-final p {
+    font-size: 1.1rem; opacity: .85; max-width: 520px; margin: 0 auto 40px;
+    line-height: 1.7; position: relative;
+  }
+  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .btn-white {
+    background: #fff; color: var(--blue);
+    border: none; padding: 16px 32px; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
+    cursor: pointer; text-decoration: none;
+    transition: transform .2s, box-shadow .2s; display: inline-block;
+  }
+  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.2); }
+  .btn-ghost-white {
+    background: transparent; color: #fff;
+    border: 2px solid rgba(255,255,255,.5);
+    padding: 14px 32px; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; text-decoration: none;
+    transition: all .2s; display: inline-block;
+  }
+  .btn-ghost-white:hover { background: rgba(255,255,255,.15); border-color: #fff; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark2);
+    padding: 40px 5%;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer .logo { font-size: 1.2rem; }
+  footer p { color: var(--text-muted); font-size: .85rem; }
+
+  /* ── WA FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 28px; right: 28px; z-index: 200;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25D366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 24px rgba(37,211,102,.4);
+    text-decoration: none; font-size: 1.6rem;
+    transition: transform .2s, box-shadow .2s;
+    animation: floatBounce 3s ease-in-out infinite;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,.5); }
+  @keyframes floatBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+  .wa-tooltip {
+    position: absolute; right: 68px; top: 50%;
+    transform: translateY(-50%);
+    background: #fff; color: #111;
+    padding: 8px 14px; border-radius: 100px;
+    font-size: .8rem; font-weight: 600; white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+    opacity: 0; pointer-events: none; transition: opacity .2s;
+  }
+  .wa-float:hover .wa-tooltip { opacity: 1; }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+  .fade-up:nth-child(2) { transition-delay: .1s; }
+  .fade-up:nth-child(3) { transition-delay: .2s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    #hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
+    .hero-btns { justify-content: center; }
+    .hero-sub { margin: 0 auto 36px; }
+    .hero-visual { margin-top: 30px; }
+    .pain-cards, .features-grid, .reviews-grid, .steps, .timeline { grid-template-columns: 1fr; }
+    .timeline::before { display: none; }
+    nav .nav-links { display: none; }
+    .comp-header span:nth-child(2), .comp-row span:nth-child(2) { display: none; }
+    .comp-header, .comp-row { grid-template-columns: 1fr 160px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">ne<span>aa</span>r</div>
+  <ul class="nav-links">
+    <li><a href="#why">¿Por qué?</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Precio</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="https://wa.me/573022512857?text=Hola,%20quiero%20ordenar%20mi%20Neaar%20Card%20🚀" target="_blank" class="nav-cta">¡Lo quiero!</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-text fade-up visible">
+    <div class="hero-badge">La alternativa #1 a las tarjetas de cartón</div>
+    <h1>Tu próximo cliente<br>ya te conoció.<br><em>¿Pudiste cerrar?</em></h1>
+    <p class="hero-sub">Con un simple toque, comparte toda tu información profesional al instante. Sin papel. Sin fricción. Sin perder prospectos.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/573022512857?text=Hola,%20quiero%20mi%20Neaar%20Card%20🚀" target="_blank" class="btn-primary">¡La quiero ahora!</a>
+      <a href="#why" class="btn-outline">Saber más</a>
+    </div>
+  </div>
+  <div class="hero-visual fade-up visible" style="transition-delay:.2s">
+    <div class="nfc-card-float">
+      <div class="brand">MAKE<br>IT<br>HAPPEN</div>
+      <div class="nfc-symbol">))</div>
+      <div class="dots-pattern">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="hero-phone">
+      <div class="phone-header"></div>
+      <div class="phone-profile">
+        <div class="phone-avatar">👤</div>
+        <div class="phone-name">Tu Nombre</div>
+        <div class="phone-title">Tu empresa · Tu rol</div>
+        <div class="phone-icons">
+          <div class="phone-icon">📸</div>
+          <div class="phone-icon">📞</div>
+          <div class="phone-icon">✉️</div>
+        </div>
+        <button class="phone-btn">Agendar una cita</button>
+        <button class="phone-btn" style="background:#1a1a1a">Página Web</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN -->
+<section id="pain">
+  <p class="section-label">El problema real</p>
+  <h2>¿Cuántos clientes<br>has perdido<br>por <span class="highlight">no cerrar bien</span>?</h2>
+  <p class="pain-sub">Conoces a alguien con potencial, conectan, se despiden… y nunca más vuelves a saber de ellos. El problema no fue el producto. Fue la fricción al compartir tu info.</p>
+  <div class="pain-cards">
+    <div class="pain-card fade-up">
+      <span class="pain-emoji">😤</span>
+      <h3>"Le di mi número verbal y nunca me escribió"</h3>
+      <p>La memoria humana falla. Si no hay un contacto guardado al instante, esa conversión se perdió para siempre.</p>
+    </div>
+    <div class="pain-card fade-up">
+      <span class="pain-emoji">🗑️</span>
+      <h3>Tu tarjeta de papel terminó en la basura</h3>
+      <p>El 90% de las tarjetas de cartón se desechan en los primeros 7 días. Tu primera impresión tiene fecha de vencimiento.</p>
+    </div>
+    <div class="pain-card fade-up">
+      <span class="pain-emoji">📉</span>
+      <h3>Tu competencia ya se ve más profesional</h3>
+      <p>Hoy, llegar a un evento sin una tarjeta digital es como llegar sin camisa. Tu imagen habla antes que tú.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="inner">
+    <p class="section-label">La evolución</p>
+    <h2>Las tarjetas de cartón<br>llevan 300 años <span class="highlight">sin evolucionar</span></h2>
+    <p class="why-sub">La presentación de una empresa es crucial. Pero seguimos usando un invento del siglo XVII. Es hora de actualizarse.</p>
+    <div class="timeline">
+      <div class="timeline-item fade-up">
+        <div class="tl-img-placeholder" style="background:#e8dcc8; font-size:2rem;">🎨</div>
+        <div class="tl-year">1705</div>
+        <div class="tl-dot"></div>
+        <p>Seguimos usando un invento <strong>creado en el siglo XVII</strong>, las <span class="accent">"tarjetas de cartón"</span></p>
+      </div>
+      <div class="timeline-item fade-up">
+        <div class="tl-img-placeholder" style="background:#d4dce8; font-size:2rem;">🗑️</div>
+        <div class="tl-year">2025</div>
+        <div class="tl-dot"></div>
+        <p>El <span class="accent">90%</span> son desechadas. <strong>Contaminan</strong> y son <em>poco efectivas</em> en la era digital</p>
+      </div>
+      <div class="timeline-item fade-up">
+        <div class="tl-img-placeholder" style="background:#cce8d4; font-size:2rem;">⚡</div>
+        <div class="tl-year">Ahora</div>
+        <div class="tl-dot" style="background:var(--green); box-shadow: 0 0 0 3px var(--green);"></div>
+        <p>La <span class="accent">neaar card</span> reemplaza todo eso con un simple <strong>tap</strong></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="inner">
+    <p class="section-label">Lo que incluye</p>
+    <h2>Todo lo que necesita<br>un emprendedor <em>serio</em></h2>
+    <p class="features-sub">No es solo una tarjeta. Es tu herramienta de cierre de ventas más poderosa.</p>
+    <div class="features-grid">
+      <div class="feat-card fade-up">
+        <div class="feat-icon">📲</div>
+        <h3>Tecnología NFC</h3>
+        <p>Un tap y tu perfil completo aparece en el teléfono del prospecto. Sin apps. Sin pasos extra.</p>
+      </div>
+      <div class="feat-card fade-up">
+        <div class="feat-icon">🌐</div>
+        <h3>Página web personalizada</h3>
+        <p>Desarrollamos una página a tu medida con tus contactos, redes, métodos de pago y enlaces.</p>
+      </div>
+      <div class="feat-card fade-up">
+        <div class="feat-icon">🔗</div>
+        <h3>Link único</h3>
+        <p>Tu perfil en un solo enlace. Compártelo en redes, correos, bio de Instagram, donde quieras.</p>
+      </div>
+      <div class="feat-card fade-up">
+        <div class="feat-icon">📱</div>
+        <h3>QR de respaldo</h3>
+        <p>Para teléfonos sin NFC. Toda la información accesible desde cualquier dispositivo del mercado.</p>
+      </div>
+      <div class="feat-card fade-up">
+        <div class="feat-icon">🔄</div>
+        <h3>Información actualizable</h3>
+        <p>Cambia tu número, añade servicios, actualiza precios. Sin reimprimir nada, en tiempo real.</p>
+      </div>
+      <div class="feat-card fade-up">
+        <div class="feat-icon">💧</div>
+        <h3>Waterproof + 10 años</h3>
+        <p>Resistente al agua y diseñada para durar más de una década. Una sola inversión para siempre.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="inner">
+    <p class="section-label" style="text-align:center">El proceso</p>
+    <h2>¿<em>Cómo funciona</em>?</h2>
+    <p class="how-sub">En 3 pasos tienes tu tarjeta lista para cerrar clientes.</p>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">01</div>
+        <div class="step-icon-wrap">🎨</div>
+        <h3>Personalización</h3>
+        <p>Diseñamos tu tarjeta NFC y tu página web a medida, según tu marca y necesidades específicas.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">02</div>
+        <div class="step-icon-wrap">💻</div>
+        <h3>Desarrollo web</h3>
+        <p>Integramos tus contactos, redes sociales, métodos de pago y cualquier enlace relevante para tu negocio.</p>
+      </div>
+      <div class="step fade-up">
+        <div class="step-num">03</div>
+        <div class="step-icon-wrap">🚀</div>
+        <h3>Comparte y cierra</h3>
+        <p>Recibe tu tarjeta lista para usar. Un tap y tu prospecto tiene toda tu info. Nunca más pierdas un contacto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section id="comparison">
+  <div class="inner">
+    <p class="section-label" style="text-align:center">La diferencia</p>
+    <h2>Neaar vs <em>el resto</em></h2>
+    <p class="comp-sub">No hay comparación posible cuando ves las características lado a lado.</p>
+    <div class="comp-table">
+      <div class="comp-header">
+        <span>Característica</span>
+        <span>Tarjeta de Cartón</span>
+        <span class="neaar-col">⚡ Neaar NFC</span>
+      </div>
+      <div class="comp-row"><span>Diseño personalizado</span><span class="check">✓</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Vida útil superior a 10 años</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Tecnología NFC (tap para compartir)</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Información actualizable</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Página web incluida</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Resistente al agua</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Experiencia interactiva</span><span class="cross">✗</span><span class="check">✓</span></div>
+      <div class="comp-row"><span>Ecológica (reutilizable)</span><span class="cross">✗</span><span class="check">✓</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="inner">
+    <p class="section-label">Inversión</p>
+    <h2>Una tarjeta. Una sola vez.</h2>
+    <p class="pricing-sub">No hay mensualidades. No hay sorpresas. Solo una inversión que trabaja por ti todos los días.</p>
+    <div class="pricing-card fade-up">
+      <div class="pricing-badge">🔥 18% de descuento — Oferta limitada</div>
+      <div class="pricing-name">Tarjeta NFC Personalizada + Página Web</div>
+      <div class="price-old">$110.000 COP</div>
+      <div class="price-new">$90.000</div>
+      <div class="price-period">Pago único · Sin mensualidades</div>
+      <ul class="pricing-features">
+        <li>Tarjeta NFC física personalizada con tu marca</li>
+        <li>Página web profesional con todos tus contactos</li>
+        <li>QR de respaldo incluido</li>
+        <li>Link único (neaar.co/tunombre)</li>
+        <li>Actualizaciones de información ilimitadas</li>
+        <li>Soporte post-entrega</li>
+        <li>Paga desde el 50% para iniciar — resto contra entrega</li>
+      </ul>
+      <a href="https://wa.me/573022512857?text=Hola,%20quiero%20ordenar%20mi%20Neaar%20Card%20por%20$90.000%20🚀" target="_blank" class="btn-order">Ordenar ahora por WhatsApp →</a>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="inner">
+    <p class="section-label" style="text-align:center">Testimonios</p>
+    <h2>Lo que dicen quienes ya la tienen</h2>
+    <div class="reviews-rating">
+      <div class="stars">★★★★★</div>
+      <div class="rating-text">5.0</div>
+      <div class="rating-count">· Clientes verificados</div>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fui a un evento de networking y fue un quiebre total. La gente quedaba impresionada con el tap. Cerré 2 clientes esa misma noche que antes se me habrían perdido."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#667eea,#764ba2)">C</div>
+          <div class="review-info">
+            <div class="name">Carlos M.</div>
+            <div class="role">Consultor de negocios</div>
+            <div class="verified">✓ Cliente verificado</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"La diferencia en cómo te perciben es brutal. Antes daba mi tarjeta de papel y la gente la guardaba y se olvidaba. Ahora tienen mi link directo en el teléfono."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c)">A</div>
+          <div class="review-info">
+            <div class="name">Andrea R.</div>
+            <div class="role">Diseñadora independiente</div>
+            <div class="verified">✓ Cliente verificado</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-up">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pensé que era un lujo, pero resultó ser la herramienta más rentable de mi negocio. Un solo cliente que no habría cerrado sin ella ya pagó la inversión 10 veces."</p>
+        <div class="review-author">
+          <div class="review-avatar" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">D</div>
+          <div class="review-info">
+            <div class="name">Diego F.</div>
+            <div class="role">Emprendedor · Sector inmobiliario</div>
+            <div class="verified">✓ Cliente verificado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="inner">
+    <p class="section-label" style="text-align:center">Preguntas frecuentes</p>
+    <h2>Todo lo que necesitas saber</h2>
+    <p class="faq-sub">Si tienes alguna duda adicional, escríbenos por WhatsApp y te respondemos al instante.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Cómo funciona exactamente?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Cada tarjeta neaar tiene tecnología NFC integrada. Solo acerca la tarjeta al teléfono y automáticamente abre tu página web de perfil. No se necesita ninguna app. Para teléfonos más antiguos, también incluimos un QR de respaldo.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Necesito descargar alguna app?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">¡No! Ni tú ni la persona a quien le muestras la tarjeta necesitan ninguna app. La tarjeta lleva directamente a tu sitio web desde cualquier teléfono moderno.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Funciona con todos los teléfonos?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">La mayoría de teléfonos modernos (iPhone 7+ y Android desde 2017) tienen NFC. Para los demás, la tarjeta incluye un código QR de respaldo que funciona en cualquier dispositivo con cámara.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Qué pasa si pierdo mi tarjeta?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Desactivamos la tarjeta perdida de inmediato para que nadie más pueda usarla, y te ofrecemos un 50% de descuento en tu próxima tarjeta de reposición.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Puedo cambiar mi información después?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Sí, siempre. Puedes actualizar tu número, redes sociales, servicios, precios o cualquier información en cualquier momento sin costo adicional. La tarjeta física no cambia, solo se actualiza el contenido digital.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          ¿Cómo es el proceso de pago?
+          <div class="faq-icon">+</div>
+        </button>
+        <div class="faq-a">Puedes pagar desde el 50% por adelantado a Nequi para iniciar el diseño y desarrollo, y el resto contra entrega cuando recibas tu tarjeta lista para usar.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <h2>Tu próxima tarjeta de<br>presentación te espera</h2>
+  <p>Deja de perder prospectos por falta de una herramienta de cierre. Un tap es todo lo que necesitas.</p>
+  <div class="cta-btns">
+    <a href="https://wa.me/573022512857?text=Hola,%20quiero%20mi%20Neaar%20Card!%20🚀" target="_blank" class="btn-white">Ordenar por WhatsApp</a>
+    <a href="https://wa.me/573022512857?text=Hola,%20quiero%20una%20demo%20de%20la%20Neaar%20Card" target="_blank" class="btn-ghost-white">Solicitar una demo</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">ne<span>aa</span>r <span style="font-weight:400;color:var(--text-muted);font-size:.9rem">card</span></div>
+  <p>© 2025 Neaar · neaar.co · Todos los derechos reservados</p>
+  <a href="https://wa.me/573022512857" target="_blank" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">📞 +57 302 251 2857</a>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/573022512857?text=Hola,%20quiero%20saber%20m%C3%A1s%20sobre%20la%20Neaar%20Card!" target="_blank" class="wa-float">
+  💬
+  <div class="wa-tooltip">¡Escríbenos!</div>
+</a>
+
+<script>
+  // FAQ
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
