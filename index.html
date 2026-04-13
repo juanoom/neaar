@@ -1,646 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    !-- Essential Meta Tags -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neaar Card — Tu tarjeta de presentación inteligente</title>
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/Favicon 32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/Favicon 180x180.png">
+<link rel="manifest" href="#">
+<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --blue: #2563FF;
-    --blue-light: #4F7FFF;
-    --green: #22C55E;
-    --cream: #F0EDE6;
-    --dark: #0A0A0A;
-    --dark2: #111111;
-    --dark3: #1A1A1A;
-    --card-bg: rgba(255,255,255,0.05);
-    --border: rgba(255,255,255,0.08);
-    --text-muted: rgba(255,255,255,0.5);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--dark);
-    color: #fff;
-    overflow-x: hidden;
-  }
-
-  h1, h2, h3, h4, .logo { font-family: 'Syne', sans-serif; }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 5%;
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    transition: padding .3s;
-  }
-  .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
-  .logo span { color: var(--blue); }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
-  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
-  .nav-links a:hover { color: #fff; }
-  .nav-cta {
-    background: var(--blue); color: #fff; border: none; padding: 10px 22px;
-    border-radius: 100px; font-family: 'Syne', sans-serif; font-weight: 700;
-    font-size: .9rem; cursor: pointer; text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
-  }
-  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,255,.4); }
-
-  /* ── HERO ── */
-  #hero {
-    min-height: 100vh;
-    background: var(--cream);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 120px 5% 80px;
-    gap: 40px;
-    position: relative;
-    overflow: hidden;
-  }
-  #hero::before {
-    content: '';
-    position: absolute; top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(37,99,255,.15) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .hero-text { color: #0A0A0A; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(37,99,255,.12); color: var(--blue);
-    border: 1px solid rgba(37,99,255,.25);
-    padding: 6px 14px; border-radius: 100px;
-    font-size: .82rem; font-weight: 600; margin-bottom: 24px;
-    font-family: 'Syne', sans-serif;
-  }
-  .hero-badge::before { content: '●'; font-size: .6rem; animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-
-  .hero-text h1 {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -1.5px;
-    margin-bottom: 20px;
-  }
-  .hero-text h1 em { font-style: normal; color: var(--blue); }
-  .hero-sub {
-    font-size: 1.1rem; color: #444; line-height: 1.6;
-    max-width: 480px; margin-bottom: 36px;
-  }
-  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-  .btn-primary {
-    background: var(--blue); color: #fff; border: none;
-    padding: 14px 28px; border-radius: 100px;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
-    display: inline-block;
-  }
-  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(37,99,255,.4); }
-  .btn-outline {
-    background: transparent; color: #0A0A0A;
-    border: 2px solid #0A0A0A;
-    padding: 13px 28px; border-radius: 100px;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; text-decoration: none;
-    transition: all .2s; display: inline-block;
-  }
-  .btn-outline:hover { background: #0A0A0A; color: #fff; }
-
-  .hero-visual { position: relative; display: flex; justify-content: center; align-items: center; }
-  .hero-phone {
-    width: 260px;
-    background: #fff;
-    border-radius: 36px;
-    box-shadow: 0 40px 80px rgba(0,0,0,.25), 0 0 0 8px #e8e4dc;
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-  }
-  .phone-header {
-    height: 140px;
-    background: linear-gradient(135deg, #ff6b35, #ff2d55, #7c3aed);
-  }
-  .phone-profile { padding: 0 20px 20px; text-align: center; margin-top: -32px; }
-  .phone-avatar {
-    width: 64px; height: 64px; border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border: 3px solid #fff;
-    margin: 0 auto 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem;
-  }
-  .phone-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; color: #111; }
-  .phone-title { font-size: .78rem; color: #666; margin-bottom: 12px; }
-  .phone-icons { display: flex; justify-content: center; gap: 14px; margin-bottom: 14px; }
-  .phone-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: #f4f4f4; display: flex; align-items: center; justify-content: center;
-    font-size: .9rem;
-  }
-  .phone-btn {
-    display: block; width: 100%;
-    background: var(--blue); color: #fff;
-    border: none; border-radius: 8px;
-    padding: 10px; text-align: center;
-    font-size: .82rem; font-weight: 600;
-    margin-bottom: 6px; cursor: pointer;
-    font-family: 'Syne', sans-serif;
-  }
-  .nfc-card-float {
-    position: absolute;
-    top: -20px; right: -30px;
-    width: 140px; height: 88px;
-    background: var(--blue);
-    border-radius: 14px;
-    display: flex; flex-direction: column;
-    justify-content: space-between;
-    padding: 12px;
-    box-shadow: 0 20px 40px rgba(37,99,255,.5);
-    z-index: 3;
-    transform: rotate(8deg);
-  }
-  .nfc-card-float .brand {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    color: #fff; font-size: .75rem; line-height: 1.2;
-    letter-spacing: 1px;
-  }
-  .nfc-symbol { color: rgba(255,255,255,.7); font-size: 1.2rem; align-self: flex-end; }
-  .dots-pattern {
-    position: absolute; bottom: 10px; right: 10px;
-    display: grid; grid-template-columns: repeat(4,6px); gap: 3px;
-  }
-  .dots-pattern span {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(255,255,255,.5);
-  }
-
-  /* ── PAIN SECTION ── */
-  #pain {
-    background: var(--dark2);
-    padding: 100px 5%;
-    text-align: center;
-  }
-  .section-label {
-    font-family: 'Syne', sans-serif; font-size: .8rem; font-weight: 700;
-    letter-spacing: 3px; text-transform: uppercase;
-    color: var(--blue); margin-bottom: 16px;
-  }
-  #pain h2 {
-    font-size: clamp(2rem, 4vw, 3.2rem);
-    font-weight: 800; letter-spacing: -1px;
-    max-width: 700px; margin: 0 auto 20px;
-    line-height: 1.1;
-  }
-  #pain h2 .highlight {
-    background: var(--blue);
-    padding: 2px 12px; border-radius: 6px;
-  }
-  .pain-sub {
-    color: var(--text-muted); max-width: 560px; margin: 0 auto 60px;
-    font-size: 1.05rem; line-height: 1.7;
-  }
-  .pain-cards {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 20px; max-width: 960px; margin: 0 auto;
-  }
-  .pain-card {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 20px; padding: 32px 28px;
-    text-align: left; position: relative; overflow: hidden;
-    transition: transform .3s, border-color .3s;
-  }
-  .pain-card:hover { transform: translateY(-6px); border-color: rgba(37,99,255,.4); }
-  .pain-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--blue), transparent);
-  }
-  .pain-emoji { font-size: 2.2rem; margin-bottom: 16px; display: block; }
-  .pain-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
-  .pain-card p { color: var(--text-muted); font-size: .92rem; line-height: 1.6; }
-
-  /* ── WHY SECTION ── */
-  #why {
-    background: var(--cream);
-    padding: 100px 5%;
-    color: #0A0A0A;
-  }
-  #why .inner { max-width: 1100px; margin: 0 auto; }
-  #why .section-label { color: var(--blue); }
-  #why h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    margin-bottom: 16px; line-height: 1.1;
-  }
-  #why h2 .highlight { color: var(--blue); }
-  .why-sub { color: #555; max-width: 560px; font-size: 1.05rem; line-height: 1.7; margin-bottom: 60px; }
-  .timeline {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 0; position: relative;
-  }
-  .timeline::before {
-    content: ''; position: absolute;
-    top: 120px; left: 16.5%; right: 16.5%; height: 3px;
-    background: linear-gradient(90deg, var(--blue), var(--blue-light));
-    z-index: 0;
-  }
-  .timeline-item { text-align: center; position: relative; z-index: 1; }
-  .tl-img {
-    width: 200px; height: 140px; border-radius: 16px;
-    object-fit: cover; margin: 0 auto 0;
-    display: block;
-    box-shadow: 0 12px 32px rgba(0,0,0,.15);
-    background: #ddd;
-    overflow: hidden;
-  }
-  .tl-img-placeholder {
-    width: 200px; height: 140px; border-radius: 16px;
-    margin: 0 auto;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3rem;
-    box-shadow: 0 12px 32px rgba(0,0,0,.15);
-  }
-  .tl-year {
-    font-family: 'Syne', sans-serif; font-weight: 800;
-    font-size: 1rem; color: #0A0A0A; margin: 16px 0 6px;
-  }
-  .tl-dot {
-    width: 16px; height: 16px; border-radius: 50%;
-    background: var(--blue); margin: 0 auto 16px;
-    border: 3px solid var(--cream);
-    box-shadow: 0 0 0 3px var(--blue);
-  }
-  .timeline-item p { font-size: .88rem; color: #444; line-height: 1.6; max-width: 200px; margin: 0 auto; }
-  .timeline-item strong { color: #0A0A0A; }
-  .timeline-item .accent { color: var(--blue); font-weight: 700; }
-
-  /* ── FEATURES ── */
-  #features {
-    background: var(--dark);
-    padding: 100px 5%;
-  }
-  #features .inner { max-width: 1100px; margin: 0 auto; }
-  #features h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    text-align: center; margin-bottom: 12px;
-  }
-  #features h2 em { font-style: normal; color: var(--blue); }
-  .features-sub {
-    text-align: center; color: var(--text-muted);
-    max-width: 500px; margin: 0 auto 60px; line-height: 1.7;
-  }
-  .features-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 16px;
-  }
-  .feat-card {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 20px; padding: 32px 24px;
-    transition: all .3s;
-  }
-  .feat-card:hover { border-color: rgba(37,99,255,.5); background: rgba(37,99,255,.06); }
-  .feat-icon {
-    width: 48px; height: 48px; border-radius: 12px;
-    background: rgba(37,99,255,.15);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 18px;
-  }
-  .feat-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-  .feat-card p { color: var(--text-muted); font-size: .88rem; line-height: 1.6; }
-
-  /* ── HOW IT WORKS ── */
-  #how {
-    background: var(--dark2);
-    padding: 100px 5%;
-  }
-  #how .inner { max-width: 900px; margin: 0 auto; text-align: center; }
-  #how h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    margin-bottom: 12px;
-  }
-  #how h2 em { font-style: italic; color: var(--blue); }
-  .how-sub { color: var(--text-muted); max-width: 500px; margin: 0 auto 60px; line-height: 1.7; }
-  .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
-  .step { position: relative; }
-  .step-num {
-    font-family: 'Syne', sans-serif; font-size: 4rem; font-weight: 800;
-    color: rgba(37,99,255,.2); line-height: 1; margin-bottom: 16px;
-  }
-  .step-icon-wrap {
-    width: 80px; height: 80px; border-radius: 20px;
-    background: var(--dark3); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; margin: 0 auto 20px;
-  }
-  .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
-  .step p { color: var(--text-muted); font-size: .88rem; line-height: 1.6; }
-
-  /* ── COMPARISON ── */
-  #comparison {
-    background: var(--dark);
-    padding: 100px 5%;
-  }
-  #comparison .inner { max-width: 860px; margin: 0 auto; }
-  #comparison h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    text-align: center; margin-bottom: 12px;
-  }
-  #comparison h2 em { font-style: normal; color: var(--blue); }
-  .comp-sub { text-align: center; color: var(--text-muted); margin-bottom: 50px; line-height: 1.7; }
-  .comp-table {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 24px; overflow: hidden;
-  }
-  .comp-header {
-    display: grid; grid-template-columns: 1fr 120px 160px;
-    padding: 20px 32px;
-    background: rgba(255,255,255,.03);
-    border-bottom: 1px solid var(--border);
-  }
-  .comp-header span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; text-align: center; }
-  .comp-header span:first-child { text-align: left; color: var(--text-muted); }
-  .comp-header .neaar-col { color: var(--blue); }
-  .comp-row {
-    display: grid; grid-template-columns: 1fr 120px 160px;
-    padding: 16px 32px;
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-    transition: background .2s;
-  }
-  .comp-row:last-child { border-bottom: none; }
-  .comp-row:hover { background: rgba(255,255,255,.02); }
-  .comp-row span { text-align: center; font-size: .95rem; }
-  .comp-row span:first-child { text-align: left; color: rgba(255,255,255,.85); font-size: .9rem; }
-  .check { color: var(--blue); font-size: 1.1rem; }
-  .cross { color: rgba(255,255,255,.2); font-size: 1.1rem; }
-
-  /* ── PRICING ── */
-  #pricing {
-    background: var(--dark2);
-    padding: 100px 5%;
-  }
-  #pricing .inner { max-width: 900px; margin: 0 auto; text-align: center; }
-  #pricing h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    margin-bottom: 12px;
-  }
-  .pricing-sub { color: var(--text-muted); max-width: 500px; margin: 0 auto 50px; line-height: 1.7; }
-  .pricing-card {
-    background: var(--dark3);
-    border: 1px solid rgba(37,99,255,.4);
-    border-radius: 28px; padding: 48px 40px;
-    max-width: 500px; margin: 0 auto;
-    position: relative; overflow: hidden;
-  }
-  .pricing-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--blue), var(--blue-light));
-  }
-  .pricing-badge {
-    display: inline-block;
-    background: rgba(37,99,255,.15); color: var(--blue);
-    border: 1px solid rgba(37,99,255,.3);
-    padding: 5px 14px; border-radius: 100px;
-    font-size: .8rem; font-weight: 700; font-family: 'Syne', sans-serif;
-    margin-bottom: 24px;
-  }
-  .pricing-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; }
-  .price-old {
-    font-size: 1.2rem; color: var(--text-muted);
-    text-decoration: line-through; margin-bottom: 4px;
-  }
-  .price-new {
-    font-size: 3.5rem; font-weight: 800; font-family: 'Syne', sans-serif;
-    line-height: 1; margin-bottom: 6px;
-  }
-  .price-period { color: var(--text-muted); font-size: .9rem; margin-bottom: 32px; }
-  .pricing-features { list-style: none; text-align: left; margin-bottom: 36px; }
-  .pricing-features li {
-    display: flex; gap: 12px; align-items: flex-start;
-    padding: 10px 0; border-bottom: 1px solid var(--border);
-    font-size: .92rem;
-  }
-  .pricing-features li:last-child { border-bottom: none; }
-  .pricing-features li::before { content: '✓'; color: var(--blue); font-weight: 700; flex-shrink: 0; }
-  .btn-order {
-    display: block; width: 100%;
-    background: var(--green); color: #fff;
-    border: none; border-radius: 14px;
-    padding: 16px; text-align: center;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; text-decoration: none;
-    transition: transform .2s, box-shadow .2s;
-  }
-  .btn-order:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(34,197,94,.35); }
-
-  /* ── REVIEWS ── */
-  #reviews {
-    background: var(--dark);
-    padding: 100px 5%;
-  }
-  #reviews .inner { max-width: 1100px; margin: 0 auto; }
-  #reviews h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    text-align: center; margin-bottom: 12px;
-  }
-  .reviews-rating {
-    display: flex; align-items: center; justify-content: center; gap: 12px;
-    margin-bottom: 50px;
-  }
-  .stars { color: #FFB800; font-size: 1.5rem; letter-spacing: 2px; }
-  .rating-text { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; }
-  .rating-count { color: var(--text-muted); font-size: .9rem; }
-  .reviews-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 20px;
-  }
-  .review-card {
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 20px; padding: 28px;
-    transition: transform .3s, border-color .3s;
-  }
-  .review-card:hover { transform: translateY(-4px); border-color: rgba(37,99,255,.3); }
-  .review-stars { color: #FFB800; font-size: .95rem; margin-bottom: 14px; }
-  .review-text { font-size: .93rem; line-height: 1.7; color: rgba(255,255,255,.8); margin-bottom: 20px; font-style: italic; }
-  .review-author { display: flex; align-items: center; gap: 12px; }
-  .review-avatar {
-    width: 42px; height: 42px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-    font-weight: 700; font-family: 'Syne', sans-serif;
-  }
-  .review-info .name { font-weight: 600; font-size: .9rem; }
-  .review-info .role { color: var(--text-muted); font-size: .8rem; }
-  .verified { display: flex; align-items: center; gap: 4px; color: var(--blue); font-size: .75rem; margin-top: 2px; }
-
-  /* ── FAQ ── */
-  #faq {
-    background: var(--dark2);
-    padding: 100px 5%;
-  }
-  #faq .inner { max-width: 720px; margin: 0 auto; }
-  #faq h2 {
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 800; letter-spacing: -1px;
-    text-align: center; margin-bottom: 12px;
-  }
-  .faq-sub { text-align: center; color: var(--text-muted); margin-bottom: 50px; line-height: 1.7; }
-  .faq-item {
-    border: 1px solid var(--border);
-    border-radius: 14px; margin-bottom: 12px;
-    overflow: hidden; transition: border-color .3s;
-  }
-  .faq-item.open { border-color: rgba(37,99,255,.4); }
-  .faq-q {
-    width: 100%; background: var(--dark3);
-    border: none; color: #fff; text-align: left;
-    padding: 20px 24px; cursor: pointer;
-    display: flex; justify-content: space-between; align-items: center;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: .95rem;
-    transition: background .2s;
-  }
-  .faq-q:hover { background: rgba(255,255,255,.04); }
-  .faq-icon {
-    width: 24px; height: 24px; border-radius: 50%;
-    background: rgba(37,99,255,.2); color: var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    font-size: .9rem; flex-shrink: 0; transition: transform .3s;
-  }
-  .faq-item.open .faq-icon { transform: rotate(45deg); }
-  .faq-a {
-    max-height: 0; overflow: hidden;
-    transition: max-height .4s ease, padding .3s;
-    background: var(--dark3);
-    padding: 0 24px;
-    color: var(--text-muted); font-size: .92rem; line-height: 1.7;
-  }
-  .faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
-
-  /* ── CTA FINAL ── */
-  #cta-final {
-    background: var(--blue);
-    padding: 100px 5%;
-    text-align: center;
-    position: relative; overflow: hidden;
-  }
-  #cta-final::before {
-    content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.15) 0%, transparent 60%);
-  }
-  #cta-final h2 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 800; letter-spacing: -1.5px;
-    margin-bottom: 20px; position: relative; line-height: 1.1;
-  }
-  #cta-final p {
-    font-size: 1.1rem; opacity: .85; max-width: 520px; margin: 0 auto 40px;
-    line-height: 1.7; position: relative;
-  }
-  .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
-  .btn-white {
-    background: #fff; color: var(--blue);
-    border: none; padding: 16px 32px; border-radius: 100px;
-    font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem;
-    cursor: pointer; text-decoration: none;
-    transition: transform .2s, box-shadow .2s; display: inline-block;
-  }
-  .btn-white:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,.2); }
-  .btn-ghost-white {
-    background: transparent; color: #fff;
-    border: 2px solid rgba(255,255,255,.5);
-    padding: 14px 32px; border-radius: 100px;
-    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
-    cursor: pointer; text-decoration: none;
-    transition: all .2s; display: inline-block;
-  }
-  .btn-ghost-white:hover { background: rgba(255,255,255,.15); border-color: #fff; }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--dark2);
-    padding: 40px 5%;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-    flex-wrap: wrap; gap: 16px;
-  }
-  footer .logo { font-size: 1.2rem; }
-  footer p { color: var(--text-muted); font-size: .85rem; }
-
-  /* ── WA FLOAT ── */
-  .wa-float {
-    position: fixed; bottom: 28px; right: 28px; z-index: 200;
-    width: 56px; height: 56px; border-radius: 50%;
-    background: #25D366;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 8px 24px rgba(37,211,102,.4);
-    text-decoration: none; font-size: 1.6rem;
-    transition: transform .2s, box-shadow .2s;
-    animation: floatBounce 3s ease-in-out infinite;
-  }
-  .wa-float:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(37,211,102,.5); }
-  @keyframes floatBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-  .wa-tooltip {
-    position: absolute; right: 68px; top: 50%;
-    transform: translateY(-50%);
-    background: #fff; color: #111;
-    padding: 8px 14px; border-radius: 100px;
-    font-size: .8rem; font-weight: 600; white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(0,0,0,.15);
-    opacity: 0; pointer-events: none; transition: opacity .2s;
-  }
-  .wa-float:hover .wa-tooltip { opacity: 1; }
-
-  /* ── ANIMATIONS ── */
-  .fade-up {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity .7s ease, transform .7s ease;
-  }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-  .fade-up:nth-child(2) { transition-delay: .1s; }
-  .fade-up:nth-child(3) { transition-delay: .2s; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 900px) {
-    #hero { grid-template-columns: 1fr; text-align: center; padding-top: 100px; }
-    .hero-btns { justify-content: center; }
-    .hero-sub { margin: 0 auto 36px; }
-    .hero-visual { margin-top: 30px; }
-    .pain-cards, .features-grid, .reviews-grid, .steps, .timeline { grid-template-columns: 1fr; }
-    .timeline::before { display: none; }
-    nav .nav-links { display: none; }
-    .comp-header span:nth-child(2), .comp-row span:nth-child(2) { display: none; }
-    .comp-header, .comp-row { grid-template-columns: 1fr 160px; }
-  }
-</style>
+<!-- CSS -->
+<link rel="stylesheet" href="./styles/index.css">
 </head>
+
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="logo">ne<span>aa</span>r</div>
+  <div id="nav-logo" style="height:28px;display:flex;align-items:center">
+    <!-- Full logo inline SVG — color swaps via JS on scroll -->
+    <svg id="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585.28 103.7" style="height:28px;width:auto;transition:fill .3s"><g fill="#0353f2"><path d="M0,98V0H79.13V19.31H98.65V98H77V21.21H21.43V98Z"/><path d="M137.26,98V78.92H118V19.31h19.31V0h59.82V19.31H216.6v21H195V21.21H139.38v17H178v21.4H139.38V76.8H195V57.28h21.6V78.71H197.08V98Z"/><path d="M486.63,98V19.31h19.3V0h59.83V19.31h19.52v21H563.64V21.21H508.05V98Z"/><rect x="405.72" y="11.11" width="30.76" height="30.76"/><rect x="374.96" y="41.87" width="30.76" height="30.76"/><rect x="436.49" y="41.87" width="30.76" height="30.76"/><path d="M297.48,41.85h0q-7.56-.14-15.36-.14c-5.21,0-10.32,0-15.37.14V72.64H236V41.88h30.76V11.13h30.76V41.85Z"/><polygon points="328.25 41.85 328.25 72.61 297.48 72.61 297.48 41.88 297.51 41.88 297.51 41.85 328.25 41.85"/><rect x="328.27" y="85.14" width="46.69" height="18.56"/></g></svg>
+  </div>
   <ul class="nav-links">
     <li><a href="#why">¿Por qué?</a></li>
     <li><a href="#features">Features</a></li>
@@ -661,29 +45,24 @@
       <a href="#why" class="btn-outline">Saber más</a>
     </div>
   </div>
-  <div class="hero-visual fade-up visible" style="transition-delay:.2s">
-    <div class="nfc-card-float">
-      <div class="brand">MAKE<br>IT<br>HAPPEN</div>
-      <div class="nfc-symbol">))</div>
-      <div class="dots-pattern">
-        <span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span>
-        <span></span><span></span><span></span><span></span>
-      </div>
-    </div>
-    <div class="hero-phone">
-      <div class="phone-header"></div>
-      <div class="phone-profile">
-        <div class="phone-avatar">👤</div>
-        <div class="phone-name">Tu Nombre</div>
-        <div class="phone-title">Tu empresa · Tu rol</div>
-        <div class="phone-icons">
-          <div class="phone-icon">📸</div>
-          <div class="phone-icon">📞</div>
-          <div class="phone-icon">✉️</div>
+  <div class="hero-visual fade-up visible">
+    <div class="hero-image-container">
+      <!-- Real product photo -->
+      <img src="./assets/001.png" alt="Neaar Card — Tarjeta NFC y perfil digital" class="hero-image">
+      <!-- Feature badges floating -->
+      <div class="feature-badge feature-badge--waterproof">
+        <span class="emoji">💧</span>
+        <div>
+          <div class="title">Waterproof</div>
+          <div class="subtitle">Resistente al agua</div>
         </div>
-        <button class="phone-btn">Agendar una cita</button>
-        <button class="phone-btn" style="background:#1a1a1a">Página Web</button>
+      </div>
+      <div class="feature-badge feature-badge--wallet">
+        <span class="emoji">📲</span>
+        <div>
+          <div class="title">Apple & Google Wallet</div>
+          <div class="subtitle">Un tap, toda tu info</div>
+        </div>
       </div>
     </div>
   </div>
@@ -775,9 +154,10 @@
         <p>Cambia tu número, añade servicios, actualiza precios. Sin reimprimir nada, en tiempo real.</p>
       </div>
       <div class="feat-card fade-up">
-        <div class="feat-icon">💧</div>
-        <h3>Waterproof + 10 años</h3>
-        <p>Resistente al agua y diseñada para durar más de una década. Una sola inversión para siempre.</p>
+        <div class="feat-icon">📲</div>
+        <h3>Apple & Google Wallet</h3>
+        <p>No importa si se te olvidó la tarjeta en casa, ten siempre a la mano tu QR para compartir desde el wallet de tu teléfono.
+        </p>
       </div>
     </div>
   </div>
@@ -838,26 +218,66 @@
 
 <!-- PRICING -->
 <section id="pricing">
-  <div class="inner">
-    <p class="section-label">Inversión</p>
-    <h2>Una tarjeta. Una sola vez.</h2>
-    <p class="pricing-sub">No hay mensualidades. No hay sorpresas. Solo una inversión que trabaja por ti todos los días.</p>
-    <div class="pricing-card fade-up">
-      <div class="pricing-badge">🔥 18% de descuento — Oferta limitada</div>
-      <div class="pricing-name">Tarjeta NFC Personalizada + Página Web</div>
-      <div class="price-old">$110.000 COP</div>
-      <div class="price-new">$90.000</div>
-      <div class="price-period">Pago único · Sin mensualidades</div>
-      <ul class="pricing-features">
-        <li>Tarjeta NFC física personalizada con tu marca</li>
-        <li>Página web profesional con todos tus contactos</li>
-        <li>QR de respaldo incluido</li>
-        <li>Link único (neaar.co/tunombre)</li>
-        <li>Actualizaciones de información ilimitadas</li>
-        <li>Soporte post-entrega</li>
-        <li>Paga desde el 50% para iniciar — resto contra entrega</li>
-      </ul>
-      <a href="https://wa.me/573022512857?text=Hola,%20quiero%20ordenar%20mi%20Neaar%20Card%20por%20$90.000%20🚀" target="_blank" class="btn-order">Ordenar ahora por WhatsApp →</a>
+  <div class="inner" style="max-width:1100px">
+    <p class="section-label">Planes</p>
+    <h2>Elige tu nivel</h2>
+    <p class="pricing-sub">Desde el emprendedor que empieza hasta la empresa que escala. Hay una neaar para cada uno.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start" class="pricing-grid">
+
+      <!-- BASIC — Coming Soon -->
+      <div style="background:var(--dark3);border:1px solid var(--border);border-radius:28px;padding:40px 32px;position:relative;opacity:.65;pointer-events:none;user-select:none">
+        <div style="position:absolute;top:20px;right:20px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:700;font-family:'Syne',sans-serif">Próximamente</div>
+        <div style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;font-family:'Syne',sans-serif">Basic</div>
+        <div style="font-size:2.6rem;font-weight:800;font-family:'Syne',sans-serif;line-height:1;margin-bottom:6px;color:rgba(255,255,255,.4)">—</div>
+        <div style="color:rgba(255,255,255,.3);font-size:.85rem;margin-bottom:28px">Disponible pronto</div>
+        <ul style="list-style:none;margin-bottom:32px">
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;color:rgba(255,255,255,.35)"><span>○</span>Tarjeta NFC estándar</li>
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.88rem;color:rgba(255,255,255,.35)"><span>○</span>Perfil digital básico</li>
+          <li style="display:flex;gap:10px;padding:9px 0;font-size:.88rem;color:rgba(255,255,255,.35)"><span>○</span>Link único</li>
+        </ul>
+        <div style="display:block;width:100%;background:rgba(255,255,255,.06);color:rgba(255,255,255,.3);border-radius:14px;padding:14px;text-align:center;font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem">Próximamente</div>
+      </div>
+
+      <!-- PRO — Featured -->
+      <div class="pricing-card fade-up" style="transform:scale(1.03);position:relative">
+        <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;padding:5px 16px;border-radius:100px;font-size:.75rem;font-weight:800;font-family:'Syne',sans-serif;white-space:nowrap;box-shadow:0 4px 16px rgba(37,99,255,.4)">⚡ Más popular</div>
+        <div class="pricing-badge">🔥 18% de descuento — Oferta limitada</div>
+        <div style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-family:'Syne',sans-serif">Pro</div>
+        <div class="pricing-name">Tarjeta NFC Personalizada + Página Web</div>
+        <div class="price-old">$110.000 COP</div>
+        <div class="price-new">$90.000</div>
+        <div class="price-period">Pago único · Sin mensualidades</div>
+        <ul class="pricing-features">
+          <li>Tarjeta NFC física personalizada con tu marca</li>
+          <li>Página web profesional con todos tus contactos</li>
+          <li>QR de respaldo incluido</li>
+          <li>Link único (neaar.co/tunombre)</li>
+          <li>Actualizaciones de información ilimitadas</li>
+          <li>Apple &amp; Google Wallet integration</li>
+          <li>Resistente al agua (Waterproof)</li>
+          <li>Soporte post-entrega</li>
+          <li>Paga 50% para iniciar — resto contra entrega</li>
+        </ul>
+        <a href="https://wa.me/573022512857?text=Hola,%20quiero%20ordenar%20mi%20Neaar%20Card%20Pro%20por%20$90.000%20🚀" target="_blank" class="btn-order">Ordenar ahora →</a>
+      </div>
+
+      <!-- ENTERPRISE -->
+      <div style="background:var(--dark3);border:1px solid rgba(255,255,255,.15);border-radius:28px;padding:40px 32px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#fff,rgba(255,255,255,.2))"></div>
+        <div style="font-size:.8rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:12px;font-family:'Syne',sans-serif">Enterprise</div>
+        <div style="font-size:1rem;font-weight:700;font-family:'Syne',sans-serif;margin-bottom:6px">Para equipos y empresas</div>
+        <div style="color:var(--text-muted);font-size:.88rem;margin-bottom:28px;line-height:1.6">Solución completa para tu equipo comercial. Precio según volumen.</div>
+        <ul style="list-style:none;margin-bottom:32px">
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem;color:rgba(255,255,255,.8)"><span style="color:#fff;font-weight:700">✓</span>Todo lo del plan Pro</li>
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem;color:rgba(255,255,255,.8)"><span style="color:#fff;font-weight:700">✓</span>Tarjetas para todo tu equipo</li>
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem;color:rgba(255,255,255,.8)"><span style="color:#fff;font-weight:700">✓</span>Dashboard de gestión de contactos</li>
+          <li style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:.88rem;color:rgba(255,255,255,.8)"><span style="color:#fff;font-weight:700">✓</span>Branding corporativo unificado</li>
+          <li style="display:flex;gap:10px;padding:9px 0;font-size:.88rem;color:rgba(255,255,255,.8)"><span style="color:#fff;font-weight:700">✓</span>Soporte prioritario dedicado</li>
+        </ul>
+        <a href="mailto:ceo@neaar.co?subject=Consulta%20Enterprise%20Neaar&body=Hola,%20estoy%20interesado%20en%20el%20plan%20Enterprise%20para%20mi%20equipo." style="display:block;width:100%;background:#fff;color:#0A0A0A;border:none;border-radius:14px;padding:14px;text-align:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;text-decoration:none;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 12px 30px rgba(255,255,255,.15)'" onmouseout="this.style.transform='';this.style.boxShadow=''">Contactar a ventas →</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -877,7 +297,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"Fui a un evento de networking y fue un quiebre total. La gente quedaba impresionada con el tap. Cerré 2 clientes esa misma noche que antes se me habrían perdido."</p>
         <div class="review-author">
-          <div class="review-avatar" style="background:linear-gradient(135deg,#667eea,#764ba2)">C</div>
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos M." class="review-avatar" style="object-fit:cover">
           <div class="review-info">
             <div class="name">Carlos M.</div>
             <div class="role">Consultor de negocios</div>
@@ -889,7 +309,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"La diferencia en cómo te perciben es brutal. Antes daba mi tarjeta de papel y la gente la guardaba y se olvidaba. Ahora tienen mi link directo en el teléfono."</p>
         <div class="review-author">
-          <div class="review-avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c)">A</div>
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Andrea R." class="review-avatar" style="object-fit:cover">
           <div class="review-info">
             <div class="name">Andrea R.</div>
             <div class="role">Diseñadora independiente</div>
@@ -901,7 +321,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"Pensé que era un lujo, pero resultó ser la herramienta más rentable de mi negocio. Un solo cliente que no habría cerrado sin ella ya pagó la inversión 10 veces."</p>
         <div class="review-author">
-          <div class="review-avatar" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">D</div>
+          <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Diego F." class="review-avatar" style="object-fit:cover">
           <div class="review-info">
             <div class="name">Diego F.</div>
             <div class="role">Emprendedor · Sector inmobiliario</div>
@@ -978,9 +398,12 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="logo">ne<span>aa</span>r <span style="font-weight:400;color:var(--text-muted);font-size:.9rem">card</span></div>
-  <p>© 2025 Neaar · neaar.co · Todos los derechos reservados</p>
-  <a href="https://wa.me/573022512857" target="_blank" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">📞 +57 302 251 2857</a>
+<img src="./assets/pet.svg" alt="neaar logo" class="footer-img">
+  <p>© 2026 Neaar · neaar.co · Todos los derechos reservados</p>
+  <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+    <a href="https://wa.me/573022512857" target="_blank" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">📞 +57 302 251 2857</a>
+    <a href="mailto:ceo@neaar.co" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">✉️ ceo@neaar.co</a>
+  </div>
 </footer>
 
 <!-- WA FLOAT -->
@@ -990,6 +413,25 @@
 </a>
 
 <script>
+  // Nav glass: switch between light/dark based on section background
+  const nav = document.querySelector('nav');
+  const heroSection = document.getElementById('hero');
+  const logoSvg = document.getElementById('logo-svg');
+  function updateNav() {
+    const heroBottom = heroSection.getBoundingClientRect().bottom;
+    if (heroBottom > 60) {
+      nav.classList.add('on-light');
+      // Keep logo blue on cream background (already blue from SVG)
+      if (logoSvg) logoSvg.querySelectorAll('g').forEach(g => g.style.fill = '#0353f2');
+    } else {
+      nav.classList.remove('on-light');
+      // White logo on dark sections
+      if (logoSvg) logoSvg.querySelectorAll('g').forEach(g => g.style.fill = '#ffffff');
+    }
+  }
+  window.addEventListener('scroll', updateNav, { passive: true });
+  updateNav();
+
   // FAQ
   function toggleFaq(btn) {
     const item = btn.closest('.faq-item');
