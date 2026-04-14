@@ -130,8 +130,8 @@
     align-items: center;
   }
   .hero-image {
-    width: 100%;
-    max-width: 540px;
+    width: 210%;
+    max-width: 900px;
     border-radius: 24px;
     filter: drop-shadow(0 40px 80px rgba(37,99,255,.25));
   }
@@ -387,24 +387,50 @@
     background: var(--dark2);
     padding: 100px 5%;
   }
-  #pricing .inner { max-width: 900px; margin: 0 auto; text-align: center; }
+  #pricing .inner { max-width: 1200px; margin: 0 auto; text-align: center; }
   #pricing h2 {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 800; letter-spacing: -1px;
     margin-bottom: 12px;
   }
   .pricing-sub { color: var(--text-muted); max-width: 500px; margin: 0 auto 50px; line-height: 1.7; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+  .pricing-grid > div {
+    width: 100%;
+    min-width: 0;
+  }
   .pricing-card {
     background: var(--dark3);
     border: 1px solid rgba(37,99,255,.4);
-    border-radius: 28px; padding: 48px 40px;
-    max-width: 500px; margin: 0 auto;
-    position: relative; overflow: hidden;
+    border-radius: 28px; padding: 60px 40px 40px;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    overflow: visible;
   }
-  .pricing-card::before {
-    content: ''; position: absolute;
-    top: 0; left: 0; right: 0; height: 3px;
-    background: linear-gradient(90deg, var(--blue), var(--blue-light));
+  .pricing-card--featured {
+    overflow: visible;
+  }
+  .pricing-featured-badge {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--blue);
+    color: #fff;
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: .82rem;
+    font-weight: 800;
+    font-family: 'Syne', sans-serif;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(37,99,255,.4);
+    z-index: 2;
   }
   .pricing-badge {
     display: inline-block;
@@ -416,12 +442,23 @@
   }
   .pricing-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 24px; }
   .price-old {
-    font-size: 1.2rem; color: var(--text-muted);
-    text-decoration: line-through; margin-bottom: 4px;
+    font-size: 1.1rem; color: var(--text-muted);
+    text-decoration: line-through; margin-bottom: 6px;
   }
   .price-new {
-    font-size: 3.5rem; font-weight: 800; font-family: 'Syne', sans-serif;
-    line-height: 1; margin-bottom: 6px;
+    font-size: clamp(2rem, 4vw, 2.6rem);
+    font-weight: 800; font-family: 'Syne', sans-serif;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: inline-block;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .price-period {
+    color: var(--text-muted);
+    font-size: .95rem;
+    margin-bottom: 32px;
   }
   .price-period { color: var(--text-muted); font-size: .9rem; margin-bottom: 32px; }
   .pricing-features { list-style: none; text-align: left; margin-bottom: 36px; }
@@ -578,9 +615,10 @@
   footer .logo { font-size: 1.2rem; }
   footer p { color: var(--text-muted); font-size: .85rem; }
   .footer-img {
-    height:22px;
-    width:auto
-}
+    height: 22px;
+    width: auto;
+    transform: rotate(-15deg);
+  }
 
   /* ── WA FLOAT ── */
   .wa-float {
