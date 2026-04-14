@@ -45,9 +45,16 @@
   nav.on-light .nav-links a { color: rgba(10,10,10,0.55); }
   nav.on-light .nav-links a:hover { color: #0A0A0A; }
   /* Logo image (replace text when real logo is ready) */
-  .logo-img { height: 32px; width: auto; display: block; }
-  .logo { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.5px; }
-  .logo span { color: var(--blue); }
+  #nav-logo {
+    height: 28px;
+    display: flex;
+    align-items: center;
+  }
+  #logo-svg {
+    height: 28px;
+    width: auto;
+    transition: fill .3s;
+  }
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a { color: var(--text-muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
   .nav-links a:hover { color: #fff; }
@@ -130,7 +137,7 @@
     align-items: center;
   }
   .hero-image {
-    width: 210%;
+    width: 190%;
     max-width: 900px;
     border-radius: 24px;
     filter: drop-shadow(0 40px 80px rgba(37,99,255,.25));
@@ -163,18 +170,6 @@
   .feature-badge .subtitle {
     font-size: .65rem;
     color: rgba(255,255,255,.5);
-  }
-  .hero-phone {
-    width: 260px;
-    background: #fff;
-    border-radius: 36px;
-    box-shadow: 0 40px 80px rgba(0,0,0,.25), 0 0 0 8px #e8e4dc;
-    overflow: hidden;
-    position: relative;
-    z-index: 2;
-  }
-  .hero-phone-img {
-    height:28px;width:auto;transition:fill .3s
   }
 
   /* ── PAIN SECTION ── */
@@ -263,6 +258,18 @@
     font-size: 3rem;
     box-shadow: 0 12px 32px rgba(0,0,0,.15);
   }
+  .tl-img-placeholder--past {
+    background: #e8dcc8;
+    font-size: 2rem;
+  }
+  .tl-img-placeholder--present {
+    background: #d4dce8;
+    font-size: 2rem;
+  }
+  .tl-img-placeholder--future {
+    background: #cce8d4;
+    font-size: 2rem;
+  }
   .tl-year {
     font-family: 'Syne', sans-serif; font-weight: 800;
     font-size: 1rem; color: #0A0A0A; margin: 16px 0 6px;
@@ -273,11 +280,18 @@
     border: 3px solid var(--cream);
     box-shadow: 0 0 0 3px var(--blue);
   }
+  .tl-dot--active {
+    background: var(--green);
+    box-shadow: 0 0 0 3px var(--green);
+  }
   .timeline-item p { font-size: .88rem; color: #444; line-height: 1.6; max-width: 200px; margin: 0 auto; }
   .timeline-item strong { color: #0A0A0A; }
-  .timeline-item .accent { color: var(--blue); font-weight: 700; }
-
-  /* ── FEATURES ── */
+  #how .section-label,
+  #comparison .section-label,
+  #reviews .section-label,
+  #faq .section-label {
+    text-align: center;
+  }
   #features {
     background: var(--dark);
     padding: 100px 5%;
@@ -416,21 +430,41 @@
   .pricing-card--featured {
     overflow: visible;
   }
-  .pricing-featured-badge {
-    position: absolute;
-    top: -18px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--blue);
-    color: #fff;
-    padding: 8px 18px;
-    border-radius: 100px;
-    font-size: .82rem;
-    font-weight: 800;
-    font-family: 'Syne', sans-serif;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(37,99,255,.4);
-    z-index: 2;
+  .pricing-card--basic {
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    opacity: .65;
+    pointer-events: none;
+    user-select: none;
+  }
+  .pricing-card--enterprise {
+    background: var(--dark3);
+    border: 1px solid rgba(255,255,255,.15);
+  }
+  .pricing-card--enterprise .pricing-badge {
+    color: rgba(255,255,255,.7);
+  }
+  .pricing-card--basic .pricing-badge {
+    color: rgba(255,255,255,.4);
+  }
+  .pricing-card--basic .price-new {
+    color: rgba(255,255,255,.4);
+  }
+  .pricing-card--basic .pricing-features li {
+    color: rgba(255,255,255,.35);
+  }
+  .pricing-card--basic .pricing-features li::before {
+    content: '○';
+    color: rgba(255,255,255,.35);
+  }
+  .pricing-card--basic .btn-order {
+    background: rgba(255,255,255,.06);
+    color: rgba(255,255,255,.3);
+    cursor: default;
+  }
+  .pricing-card--basic .btn-order:hover {
+    transform: none;
+    box-shadow: none;
   }
   .pricing-badge {
     display: inline-block;
@@ -612,12 +646,22 @@
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: 16px;
   }
-  footer .logo { font-size: 1.2rem; }
-  footer p { color: var(--text-muted); font-size: .85rem; }
+  footer p { color: var(--text-muted); font-size: .85rem; flex: 1; margin: 0; text-align: left; }
+  .footer-contact {
+    display: flex; flex-direction: column; gap: 4px;
+    align-items: center;
+    flex: 1;
+  }
   .footer-img {
-    height: 22px;
+    height: 92px;
     width: auto;
     transform: rotate(-15deg);
+    margin-left: auto;
+  }
+  .footer-link {
+    color: var(--text-muted);
+    font-size: .85rem;
+    text-decoration: none;
   }
 
   /* ── WA FLOAT ── */

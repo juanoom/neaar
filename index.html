@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    !-- Essential Meta Tags -->
+    <!-- Essential Meta Tags -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neaar Card — Tu tarjeta de presentación inteligente</title>
 <!-- Favicons -->
 <link rel="icon" type="image/png" sizes="32x32" href="./assets/Favicon 32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="./assets/Favicon 180x180.png">
-<link rel="manifest" href="#">
+<link rel="manifest" href="./assets/site.webmanifest">
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
 
 <!-- NAV -->
 <nav>
-  <div id="nav-logo" style="height:28px;display:flex;align-items:center">
+  <div id="nav-logo">
     <!-- Full logo inline SVG — color swaps via JS on scroll -->
     <svg id="logo-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585.28 103.7" style="height:28px;width:auto;transition:fill .3s"><g fill="#0353f2"><path d="M0,98V0H79.13V19.31H98.65V98H77V21.21H21.43V98Z"/><path d="M137.26,98V78.92H118V19.31h19.31V0h59.82V19.31H216.6v21H195V21.21H139.38v17H178v21.4H139.38V76.8H195V57.28h21.6V78.71H197.08V98Z"/><path d="M486.63,98V19.31h19.3V0h59.83V19.31h19.52v21H563.64V21.21H508.05V98Z"/><rect x="405.72" y="11.11" width="30.76" height="30.76"/><rect x="374.96" y="41.87" width="30.76" height="30.76"/><rect x="436.49" y="41.87" width="30.76" height="30.76"/><path d="M297.48,41.85h0q-7.56-.14-15.36-.14c-5.21,0-10.32,0-15.37.14V72.64H236V41.88h30.76V11.13h30.76V41.85Z"/><polygon points="328.25 41.85 328.25 72.61 297.48 72.61 297.48 41.88 297.51 41.88 297.51 41.85 328.25 41.85"/><rect x="328.27" y="85.14" width="46.69" height="18.56"/></g></svg>
   </div>
@@ -86,21 +86,21 @@
     <p class="why-sub">La presentación de una empresa es crucial. Pero seguimos usando un invento del siglo XVII. Es hora de actualizarse.</p>
     <div class="timeline">
       <div class="timeline-item fade-up">
-        <div class="tl-img-placeholder" style="background:#e8dcc8; font-size:2rem;">🎨</div>
+        <div class="tl-img-placeholder tl-img-placeholder--past">🎨</div>
         <div class="tl-year">1705</div>
         <div class="tl-dot"></div>
         <p>Seguimos usando un invento <strong>creado en el siglo XVII</strong>, las <span class="accent">"tarjetas de cartón"</span></p>
       </div>
       <div class="timeline-item fade-up">
-        <div class="tl-img-placeholder" style="background:#d4dce8; font-size:2rem;">🗑️</div>
+        <div class="tl-img-placeholder tl-img-placeholder--present">🗑️</div>
         <div class="tl-year">2025</div>
         <div class="tl-dot"></div>
         <p>El <span class="accent">90%</span> son desechadas. <strong>Contaminan</strong> y son <em>poco efectivas</em> en la era digital</p>
       </div>
       <div class="timeline-item fade-up">
-        <div class="tl-img-placeholder" style="background:#cce8d4; font-size:2rem;">⚡</div>
+        <div class="tl-img-placeholder tl-img-placeholder--future">⚡</div>
         <div class="tl-year">Ahora</div>
-        <div class="tl-dot" style="background:var(--green); box-shadow: 0 0 0 3px var(--green);"></div>
+        <div class="tl-dot tl-dot--active"></div>
         <p>La <span class="accent">neaar card</span> reemplaza todo eso con un simple <strong>tap</strong></p>
       </div>
     </div>
@@ -152,7 +152,7 @@
 <!-- HOW -->
 <section id="how">
   <div class="inner">
-    <p class="section-label" style="text-align:center">El proceso</p>
+    <p class="section-label">El proceso</p>
     <h2>¿<em>Cómo funciona</em>?</h2>
     <p class="how-sub">En 3 pasos tienes tu tarjeta lista para cerrar clientes.</p>
     <div class="steps">
@@ -181,7 +181,7 @@
 <!-- COMPARISON -->
 <section id="comparison">
   <div class="inner">
-    <p class="section-label" style="text-align:center">La diferencia</p>
+    <p class="section-label">La diferencia</p>
     <h2>Neaar vs <em>el resto</em></h2>
     <p class="comp-sub">No hay comparación posible cuando ves las características lado a lado.</p>
     <div class="comp-table">
@@ -271,7 +271,7 @@
 <!-- REVIEWS -->
 <section id="reviews">
   <div class="inner">
-    <p class="section-label" style="text-align:center">Testimonios</p>
+    <p class="section-label">Testimonios</p>
     <h2>Lo que dicen quienes ya la tienen</h2>
     <div class="reviews-rating">
       <div class="stars">★★★★★</div>
@@ -283,7 +283,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"Fui a un evento de networking y fue un quiebre total. La gente quedaba impresionada con el tap. Cerré 2 clientes esa misma noche que antes se me habrían perdido."</p>
         <div class="review-author">
-          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos M." class="review-avatar" style="object-fit:cover">
+          <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos M." class="review-avatar">
           <div class="review-info">
             <div class="name">Carlos M.</div>
             <div class="role">Consultor de negocios</div>
@@ -295,7 +295,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"La diferencia en cómo te perciben es brutal. Antes daba mi tarjeta de papel y la gente la guardaba y se olvidaba. Ahora tienen mi link directo en el teléfono."</p>
         <div class="review-author">
-          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Andrea R." class="review-avatar" style="object-fit:cover">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Andrea R." class="review-avatar">
           <div class="review-info">
             <div class="name">Andrea R.</div>
             <div class="role">Diseñadora independiente</div>
@@ -307,7 +307,7 @@
         <div class="review-stars">★★★★★</div>
         <p class="review-text">"Pensé que era un lujo, pero resultó ser la herramienta más rentable de mi negocio. Un solo cliente que no habría cerrado sin ella ya pagó la inversión 10 veces."</p>
         <div class="review-author">
-          <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Diego F." class="review-avatar" style="object-fit:cover">
+          <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Diego F." class="review-avatar">
           <div class="review-info">
             <div class="name">Diego F.</div>
             <div class="role">Emprendedor · Sector inmobiliario</div>
@@ -322,7 +322,7 @@
 <!-- FAQ -->
 <section id="faq">
   <div class="inner">
-    <p class="section-label" style="text-align:center">Preguntas frecuentes</p>
+    <p class="section-label">Preguntas frecuentes</p>
     <h2>Todo lo que necesitas saber</h2>
     <p class="faq-sub">Si tienes alguna duda adicional, escríbenos por WhatsApp y te respondemos al instante.</p>
     <div class="faq-list">
@@ -383,13 +383,31 @@
 </section>
 
 <!-- FOOTER -->
-<footer>
-<img src="./assets/pet.svg" alt="neaar logo" class="footer-img">
-  <p>© 2026 Neaar · neaar.co · Todos los derechos reservados</p>
-  <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
-    <a href="https://wa.me/573022512857" target="_blank" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">📞 +57 302 251 2857</a>
-    <a href="mailto:ceo@neaar.co" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">✉️ ceo@neaar.co</a>
+<footer style="position:relative;overflow:hidden">
+
+  <!-- Pet bleeding from bottom-right corner, rotated like reference -->
+  <div style="position:absolute;bottom:-60px;right:-50px;width:300px;height:300px;pointer-events:none;z-index:0">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 231.3 92.6" style="width:100%;height:100%;transform:rotate(-15deg);transform-origin:50% 50%">
+      <rect x="169.8" y="0"    width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="139"   y="30.8" width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="200.5" y="30.8" width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="30.8"  y="0"    width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="0"     y="30.8" width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="61.5"  y="30.8" width="30.8" height="30.8" fill="rgba(255,255,255,0.10)"/>
+      <rect x="92.3"  y="74"   width="46.7" height="18.6" fill="rgba(255,255,255,0.10)"/>
+    </svg>
   </div>
+
+  <!-- Content -->
+  <div style="position:relative;z-index:1;display:contents">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 585.28 103.7" style="height:22px;width:auto"><g fill="#0353f2"><path d="M0,98V0H79.13V19.31H98.65V98H77V21.21H21.43V98Z"/><path d="M137.26,98V78.92H118V19.31h19.31V0h59.82V19.31H216.6v21H195V21.21H139.38v17H178v21.4H139.38V76.8H195V57.28h21.6V78.71H197.08V98Z"/><path d="M486.63,98V19.31h19.3V0h59.83V19.31h19.52v21H563.64V21.21H508.05V98Z"/><rect x="405.72" y="11.11" width="30.76" height="30.76"/><rect x="374.96" y="41.87" width="30.76" height="30.76"/><rect x="436.49" y="41.87" width="30.76" height="30.76"/><path d="M297.48,41.85h0q-7.56-.14-15.36-.14c-5.21,0-10.32,0-15.37.14V72.64H236V41.88h30.76V11.13h30.76V41.85Z"/><polygon points="328.25 41.85 328.25 72.61 297.48 72.61 297.48 41.88 297.51 41.88 297.51 41.85 328.25 41.85"/><rect x="328.27" y="85.14" width="46.69" height="18.56"/></g></svg>
+    <p>© 2025 Neaar · neaar.co · Todos los derechos reservados</p>
+    <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+      <a href="https://wa.me/573022512857" target="_blank" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">📞 +57 302 251 2857</a>
+      <a href="mailto:ceo@neaar.co" style="color:var(--text-muted);font-size:.85rem;text-decoration:none">✉️ ceo@neaar.co</a>
+    </div>
+  </div>
+
 </footer>
 
 <!-- WA FLOAT -->
