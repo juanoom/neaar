@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juan Millán — Creator & Builder</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–bg: #080a0f;
+–surface: #0e1117;
+–surface2: #151820;
+–border: rgba(255,255,255,0.07);
+–accent: #00e5ff;
+–accent2: #7b61ff;
+–text: #f0f2f7;
+–muted: #6b7280;
+–card-glow: rgba(0,229,255,0.06);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–bg);
+color: var(–text);
+overflow-x: hidden;
+cursor: none;
+}
+
+/* CUSTOM CURSOR */
+.cursor {
+position: fixed;
+width: 10px; height: 10px;
+background: var(–accent);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9999;
+transition: transform 0.1s;
+mix-blend-mode: screen;
+}
+.cursor-ring {
+position: fixed;
+width: 36px; height: 36px;
+border: 1.5px solid rgba(0,229,255,0.4);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9998;
+transition: transform 0.18s ease, width 0.2s, height 0.2s;
+}
+.cursor.hover { transform: scale(2.5); }
+.cursor-ring.hover { width: 52px; height: 52px; border-color: var(–accent); }
+
+/* NOISE OVERLAY */
+body::before {
+content: ‘’;
+position: fixed;
+inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘0.04’/%3E%3C/svg%3E”);
+pointer-events: none;
+z-index: 100;
+opacity: 0.35;
+}
+
+/* NAV */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 500;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 22px 48px;
+background: rgba(8,10,15,0.75);
+backdrop-filter: blur(18px);
+border-bottom: 1px solid var(–border);
+}
+.nav-logo {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: 1.1rem;
+letter-spacing: -0.02em;
+color: var(–text);
+}
+.nav-logo span { color: var(–accent); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+color: var(–muted);
+text-decoration: none;
+font-size: 0.85rem;
+font-weight: 500;
+letter-spacing: 0.04em;
+text-transform: uppercase;
+transition: color 0.2s;
+}
+.nav-links a:hover { color: var(–accent); }
+.nav-cta {
+background: var(–accent);
+color: #080a0f !important;
+padding: 9px 22px;
+border-radius: 100px;
+font-weight: 600 !important;
+letter-spacing: 0.02em !important;
+transition: box-shadow 0.2s, transform 0.2s !important;
+}
+.nav-cta:hover { box-shadow: 0 0 24px rgba(0,229,255,0.4); transform: translateY(-1px); color: #080a0f !important; }
+
+/* HERO */
+.hero {
+min-height: 100vh;
+display: flex;
+align-items: center;
+padding: 120px 48px 80px;
+position: relative;
+overflow: hidden;
+}
+.hero-bg-grid {
+position: absolute;
+inset: 0;
+background-image:
+linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+background-size: 60px 60px;
+mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+}
+.hero-glow {
+position: absolute;
+width: 600px; height: 600px;
+background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
+top: -100px; right: -100px;
+border-radius: 50%;
+animation: pulse 6s ease-in-out infinite;
+}
+.hero-glow2 {
+position: absolute;
+width: 400px; height: 400px;
+background: radial-gradient(circle, rgba(123,97,255,0.07) 0%, transparent 70%);
+bottom: -80px; left: 10%;
+border-radius: 50%;
+animation: pulse 8s ease-in-out infinite reverse;
+}
+@keyframes pulse {
+0%, 100% { transform: scale(1); opacity: 1; }
+50% { transform: scale(1.1); opacity: 0.7; }
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
+.hero-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(0,229,255,0.08);
+border: 1px solid rgba(0,229,255,0.2);
+color: var(–accent);
+font-size: 0.78rem;
+font-weight: 500;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 7px 16px;
+border-radius: 100px;
+margin-bottom: 32px;
+animation: fadeUp 0.8s ease both;
+}
+.hero-badge::before { content: ‘●’; font-size: 0.5rem; animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+h1 {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: clamp(3rem, 7vw, 6rem);
+line-height: 1.0;
+letter-spacing: -0.03em;
+animation: fadeUp 0.8s 0.1s ease both;
+}
+h1 .line2 { color: var(–accent); display: block; }
+
+.hero-sub {
+margin-top: 24px;
+font-size: 1.1rem;
+color: var(–muted);
+font-weight: 300;
+max-width: 520px;
+line-height: 1.7;
+animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+margin-top: 32px;
+animation: fadeUp 0.8s 0.3s ease both;
+}
+.tag {
+background: var(–surface2);
+border: 1px solid var(–border);
+color: var(–muted);
+font-size: 0.8rem;
+padding: 6px 14px;
+border-radius: 100px;
+font-weight: 500;
+}
+.hero-actions {
+display: flex;
+gap: 16px;
+margin-top: 44px;
+animation: fadeUp 0.8s 0.4s ease both;
+}
+.btn-primary {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: var(–accent);
+color: #080a0f;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.9rem;
+padding: 14px 30px;
+border-radius: 100px;
+text-decoration: none;
+transition: box-shadow 0.2s, transform 0.2s;
+letter-spacing: 0.01em;
+}
+.btn-primary:hover { box-shadow: 0 0 32px rgba(0,229,255,0.5); transform: translateY(-2px); }
+.btn-secondary {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: transparent;
+color: var(–text);
+font-family: ‘Syne’, sans-serif;
+font-weight: 600;
+font-size: 0.9rem;
+padding: 14px 30px;
+border-radius: 100px;
+text-decoration: none;
+border: 1px solid var(–border);
+transition: border-color 0.2s, background 0.2s;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.2); background: var(–surface); }
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(28px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+/* STATS */
+.stats {
+display: flex;
+gap: 48px;
+margin-top: 64px;
+padding-top: 48px;
+border-top: 1px solid var(–border);
+animation: fadeUp 0.8s 0.5s ease both;
+}
+.stat-num {
+font-family: ‘Syne’, sans-serif;
+font-size: 2rem;
+font-weight: 800;
+color: var(–text);
+}
+.stat-num span { color: var(–accent); }
+.stat-label { font-size: 0.8rem; color: var(–muted); margin-top: 2px; }
+
+/* SECTIONS */
+section { padding: 100px 48px; }
+.section-label {
+font-size: 0.75rem;
+font-weight: 600;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 16px;
+}
+.section-title {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(2rem, 4vw, 3rem);
+font-weight: 800;
+letter-spacing: -0.03em;
+margin-bottom: 48px;
+}
+
+/* SERVICES */
+#services { background: var(–surface); }
+.services-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 20px;
+}
+.service-card {
+background: var(–bg);
+border: 1px solid var(–border);
+border-radius: 16px;
+padding: 32px;
+transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+position: relative;
+overflow: hidden;
+}
+.service-card::before {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: var(–card-glow);
+opacity: 0;
+transition: opacity 0.3s;
+}
+.service-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+.service-card:hover::before { opacity: 1; }
+.service-icon {
+font-size: 1.8rem;
+margin-bottom: 20px;
+display: block;
+}
+.service-name {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 1.1rem;
+margin-bottom: 10px;
+}
+.service-desc { font-size: 0.88rem; color: var(–muted); line-height: 1.6; }
+
+/* WORK / VIDEOS */
+#work { background: var(–bg); }
+.work-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 20px;
+}
+.video-card {
+background: var(–surface);
+border: 1px solid var(–border);
+border-radius: 16px;
+overflow: hidden;
+transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.video-card:hover { transform: translateY(-4px); box-shadow: 0 24px 64px rgba(0,0,0,0.5); border-color: rgba(0,229,255,0.2); }
+.video-embed {
+position: relative;
+padding-bottom: 177.78%; /* 9:16 for reels */
+height: 0;
+overflow: hidden;
+}
+.video-embed.youtube { padding-bottom: 56.25%; }
+.video-embed iframe {
+position: absolute;
+top: 0; left: 0;
+width: 100%; height: 100%;
+border: none;
+}
+.video-meta {
+padding: 18px 20px;
+}
+.video-label {
+font-size: 0.7rem;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: var(–accent);
+font-weight: 600;
+margin-bottom: 4px;
+}
+.video-title {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.95rem;
+}
+
+/* ABOUT */
+#about { background: var(–surface); }
+.about-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 64px;
+align-items: center;
+}
+.about-text p {
+color: var(–muted);
+line-height: 1.8;
+font-size: 1rem;
+margin-bottom: 16px;
+font-weight: 300;
+}
+.about-text p strong { color: var(–text); font-weight: 500; }
+.skills-list {
+display: flex;
+flex-wrap: wrap;
+gap: 10px;
+margin-top: 28px;
+}
+.skill-pill {
+background: var(–bg);
+border: 1px solid var(–border);
+color: var(–text);
+font-size: 0.8rem;
+padding: 6px 16px;
+border-radius: 100px;
+font-weight: 500;
+}
+.about-highlights { display: flex; flex-direction: column; gap: 16px; }
+.highlight-card {
+background: var(–bg);
+border: 1px solid var(–border);
+border-radius: 14px;
+padding: 24px 28px;
+transition: border-color 0.3s;
+}
+.highlight-card:hover { border-color: rgba(0,229,255,0.25); }
+.highlight-title {
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 1rem;
+margin-bottom: 6px;
+}
+.highlight-sub { font-size: 0.85rem; color: var(–muted); line-height: 1.5; }
+.highlight-date {
+font-size: 0.75rem;
+color: var(–accent);
+font-weight: 600;
+margin-top: 8px;
+}
+
+/* NEAAR SECTION */
+#neaar {
+background: linear-gradient(135deg, #080a0f 0%, #0a0f1a 50%, #080a0f 100%);
+border-top: 1px solid var(–border);
+border-bottom: 1px solid var(–border);
+text-align: center;
+padding: 100px 48px;
+}
+.neaar-inner {
+max-width: 640px;
+margin: 0 auto;
+}
+.neaar-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(123,97,255,0.1);
+border: 1px solid rgba(123,97,255,0.25);
+color: #a78bfa;
+font-size: 0.78rem;
+font-weight: 600;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+padding: 7px 16px;
+border-radius: 100px;
+margin-bottom: 28px;
+}
+.neaar-title {
+font-family: ‘Syne’, sans-serif;
+font-size: clamp(2rem, 5vw, 3.5rem);
+font-weight: 800;
+letter-spacing: -0.03em;
+margin-bottom: 20px;
+}
+.neaar-desc { color: var(–muted); line-height: 1.7; font-weight: 300; margin-bottom: 36px; }
+.btn-neaar {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: linear-gradient(135deg, #7b61ff, #a78bfa);
+color: white;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.95rem;
+padding: 16px 36px;
+border-radius: 100px;
+text-decoration: none;
+transition: box-shadow 0.3s, transform 0.2s;
+}
+.btn-neaar:hover { box-shadow: 0 0 40px rgba(123,97,255,0.4); transform: translateY(-2px); }
+
+/* CONTACT */
+#contact { background: var(–bg); text-align: center; }
+.contact-inner { max-width: 560px; margin: 0 auto; }
+.contact-inner .section-title { margin-bottom: 16px; }
+.contact-sub { color: var(–muted); margin-bottom: 48px; font-weight: 300; line-height: 1.7; }
+.contact-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+.btn-whatsapp {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: #25D366;
+color: white;
+font-family: ‘Syne’, sans-serif;
+font-weight: 700;
+font-size: 0.95rem;
+padding: 16px 36px;
+border-radius: 100px;
+text-decoration: none;
+transition: box-shadow 0.3s, transform 0.2s;
+}
+.btn-whatsapp:hover { box-shadow: 0 0 32px rgba(37,211,102,0.4); transform: translateY(-2px); }
+.btn-email {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+background: transparent;
+color: var(–text);
+font-family: ‘Syne’, sans-serif;
+font-weight: 600;
+font-size: 0.95rem;
+padding: 16px 36px;
+border-radius: 100px;
+text-decoration: none;
+border: 1px solid var(–border);
+transition: border-color 0.2s, background 0.2s;
+}
+.btn-email:hover { border-color: rgba(255,255,255,0.2); background: var(–surface); }
+
+/* FOOTER */
+footer {
+background: var(–surface);
+border-top: 1px solid var(–border);
+padding: 32px 48px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.footer-logo {
+font-family: ‘Syne’, sans-serif;
+font-weight: 800;
+font-size: 1rem;
+}
+.footer-logo span { color: var(–accent); }
+footer p { font-size: 0.8rem; color: var(–muted); }
+
+/* SCROLL REVEAL */
+.reveal {
+opacity: 0;
+transform: translateY(32px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+nav { padding: 18px 24px; }
+.nav-links { display: none; }
+.hero { padding: 100px 24px 60px; }
+section { padding: 70px 24px; }
+.about-grid { grid-template-columns: 1fr; gap: 40px; }
+.stats { gap: 28px; flex-wrap: wrap; }
+footer { flex-direction: column; gap: 12px; text-align: center; }
+#neaar, #contact { padding: 70px 24px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+
+<nav>
+  <div class="nav-logo">Juan<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#neaar">Neaar</a></li>
+    <li><a href="https://wa.me/573202894682" target="_blank" class="nav-cta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+  <div class="hero-bg-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Available for freelance work</div>
+    <h1>
+      I build brands.<br>
+      <span class="line2">I create content.</span>
+    </h1>
+    <p class="hero-sub">17-year-old entrepreneur from Colombia. CEO of <strong style="color:var(--text)">Neaar</strong>, content creator, video editor, and brand builder — I make things happen fast.</p>
+    <div class="hero-tags">
+      <span class="tag">Video Editing</span>
+      <span class="tag">Content Creation</span>
+      <span class="tag">Branding</span>
+      <span class="tag">Web Development</span>
+      <span class="tag">Startup Strategy</span>
+    </div>
+    <div class="hero-actions">
+      <a href="https://wa.me/573202894682" target="_blank" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hire Me
+      </a>
+      <a href="#work" class="btn-secondary">See My Work →</a>
+    </div>
+    <div class="stats">
+      <div>
+        <div class="stat-num">2<span>+</span></div>
+        <div class="stat-label">Years building startups</div>
+      </div>
+      <div>
+        <div class="stat-num">4<span>+</span></div>
+        <div class="stat-label">Active projects</div>
+      </div>
+      <div>
+        <div class="stat-num">17</div>
+        <div class="stat-label">Years old, moving fast</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+
+<section id="services">
+  <div class="reveal">
+    <div class="section-label">What I Do</div>
+    <div class="section-title">Services</div>
+  </div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <span class="service-icon">🎬</span>
+      <div class="service-name">Video Editing</div>
+      <p class="service-desc">Short-form content, Reels, TikToks, YouTube. Vertical & horizontal. Storytelling-first editing that actually gets views.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📱</span>
+      <div class="service-name">Content Creation</div>
+      <p class="service-desc">Full production — scripting, filming, lighting, framing, and audio. I know what works on social because I do it myself.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🎨</span>
+      <div class="service-name">Branding & Design</div>
+      <p class="service-desc">Brand identity, graphic design, visual systems. Tools: Photoshop, Illustrator, Figma. Built brands from scratch.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">💻</span>
+      <div class="service-name">Web Development</div>
+      <p class="service-desc">Clean, functional websites using HTML, CSS & GitHub. Fast delivery, startup-ready builds that represent your brand well.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">🚀</span>
+      <div class="service-name">Startup & Brand Strategy</div>
+      <p class="service-desc">From idea to launch. Product prototyping, client acquisition, team management. I've built a company at 16 — I know the process.</p>
+    </div>
+    <div class="service-card">
+      <span class="service-icon">📡</span>
+      <div class="service-name">NFC Technology</div>
+      <p class="service-desc">NFC card programming and integration. Smart digital business cards and connected product experiences.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORK -->
+
+<section id="work">
+  <div class="reveal">
+    <div class="section-label">Portfolio</div>
+    <div class="section-title">My Work</div>
+  </div>
+  <div class="work-grid reveal">
+
+```
+<div class="video-card">
+  <div class="video-embed">
+    <iframe src="https://www.instagram.com/reel/DTrNTSmDNg0/embed" allowfullscreen scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+  </div>
+  <div class="video-meta">
+    <div class="video-label">Instagram Reel</div>
+    <div class="video-title">Content Creation</div>
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-embed">
+    <iframe src="https://www.instagram.com/reel/DXF1ftGh7zj/embed" allowfullscreen scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+  </div>
+  <div class="video-meta">
+    <div class="video-label">Instagram Reel</div>
+    <div class="video-title">Short-Form Video</div>
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-embed">
+    <iframe src="https://www.instagram.com/reel/DMBDVt2JF1T/embed" allowfullscreen scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+  </div>
+  <div class="video-meta">
+    <div class="video-label">Instagram Reel</div>
+    <div class="video-title">Video Editing</div>
+  </div>
+</div>
+
+<div class="video-card">
+  <div class="video-embed youtube">
+    <iframe src="https://www.youtube.com/embed/5qdjpYuNqmg" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"></iframe>
+  </div>
+  <div class="video-meta">
+    <div class="video-label">YouTube</div>
+    <div class="video-title">Production & Storytelling</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+  <div class="reveal">
+    <div class="section-label">Who I Am</div>
+    <div class="section-title">About Me</div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I'm <strong>Juan Millán</strong>, a 17-year-old Colombian entrepreneur who started building at 16. I'm the CEO and Founder of <strong>Neaar</strong> — a startup working with NFC technology, branding, and web creation.</p>
+      <p>I've been creating content since 2018, speaking in front of hundreds of people, editing video across every format, and learning every tool I could get my hands on. I move fast, I learn faster.</p>
+      <p>Currently aiming to study <strong>Gestión del Emprendimiento e Innovación</strong> at UPB. I'm fluent in Spanish (native) and English (B2).</p>
+      <div class="skills-list">
+        <span class="skill-pill">DaVinci Resolve</span>
+        <span class="skill-pill">Photoshop</span>
+        <span class="skill-pill">Figma</span>
+        <span class="skill-pill">Illustrator</span>
+        <span class="skill-pill">Notion</span>
+        <span class="skill-pill">HTML & CSS</span>
+        <span class="skill-pill">Leadership</span>
+        <span class="skill-pill">Public Speaking</span>
+        <span class="skill-pill">Fast Learning</span>
+      </div>
+    </div>
+    <div class="about-highlights">
+      <div class="highlight-card">
+        <div class="highlight-title">🏢 neaar — CEO & Founder</div>
+        <div class="highlight-sub">NFC tech, branding, web creation. Built from scratch — team of 4–5 people, real clients, real results.</div>
+        <div class="highlight-date">Oct 2023 — Present</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-title">🎬 Juanoom — Content Creator</div>
+        <div class="highlight-sub">Short-form content across Instagram, TikTok and YouTube. Storytelling, editing, metrics — all of it.</div>
+        <div class="highlight-date">Jan 2024 — Present</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-title">🏊 The Unofficial Ironman — Founder</div>
+        <div class="highlight-sub">A triathlon event built for my local community. Designed merch, led marketing, managed the whole project.</div>
+        <div class="highlight-date">Mar — Apr 2025</div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-title">📺 Predicando su Palabra — Creator</div>
+        <div class="highlight-sub">Spoke in front of hundreds, produced audiovisual content, mastered iMovie → Filmora → Adobe.</div>
+        <div class="highlight-date">Jul 2018 — Apr 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEAAR CTA -->
+
+<section id="neaar">
+  <div class="neaar-inner reveal">
+    <div class="neaar-badge">My Main Startup</div>
+    <div class="neaar-title">Check out Neaar</div>
+    <p class="neaar-desc">Neaar is my company — we build NFC-powered digital business cards and brand experiences for businesses and creators. Built from scratch, growing fast.</p>
+    <a href="https://neaar.co" target="_blank" class="btn-neaar">
+      Visit neaar.co →
+    </a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="section-label">Let's Work Together</div>
+    <div class="section-title">Hire Me</div>
+    <p class="contact-sub">Looking for a video editor, content creator, brand designer, or a driven young professional who gets things done? Let's talk.</p>
+    <div class="contact-actions">
+      <a href="https://wa.me/573202894682" target="_blank" class="btn-whatsapp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp Me
+      </a>
+      <a href="mailto:CEO@neaar.co" class="btn-email">
+        CEO@neaar.co
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-logo">Juan<span>.</span></div>
+  <p>© 2025 Juan Millán. All rights reserved.</p>
+  <p style="font-size:0.8rem;color:var(--muted)">Medellín, Colombia 🇨🇴</p>
+</footer>
+
+<script>
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px';
+    ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .service-card, .video-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursor.classList.add('hover'); ring.classList.add('hover'); });
+    el.addEventListener('mouseleave', () => { cursor.classList.remove('hover'); ring.classList.remove('hover'); });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => obs.observe(r));
+</script>
+
+</body>
+</html>
